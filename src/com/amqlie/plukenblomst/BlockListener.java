@@ -55,7 +55,7 @@ public class BlockListener implements Listener
 	            
 	              };
 
-	        if(flowers.contains(block.getType())){
+	    if(flowers.contains(block.getType())){
         	
 			PlukEnBlomst.numberOfFlowersPicked++;
 		}
