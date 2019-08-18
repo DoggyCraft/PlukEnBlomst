@@ -12,8 +12,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class BlockListener implements Listener
 {
 	// Will be called when this BlockListener is created
-	BlockListener(
-			)
+	BlockListener()
 	{
 	}
 	
@@ -56,7 +55,7 @@ public class BlockListener implements Listener
 	            
 	              };
 
-        if(flowers.contains(block.getType())){
+	        if(flowers.contains(block.getType())){
         	
 			PlukEnBlomst.numberOfFlowersPicked++;
 		}
