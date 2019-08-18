@@ -1,5 +1,8 @@
 package com.amqlie.plukenblomst;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -19,8 +22,7 @@ public class BlockListener implements Listener
 	// Called when a block is placed by a player.
 	// If a Block Place event is cancelled, the block will not be placed.
 	@EventHandler
-	public void OnBlockPlace(BlockPlaceEvent event)
-	{
+	public void OnBlockPlace(BlockPlaceEvent event){
 		// Do stuff		
 	}
 	
@@ -33,27 +35,27 @@ public class BlockListener implements Listener
 		
 		Block block = event.getBlock();
 		Player player = event.getPlayer();
-		Material[] flowers = new Material[] 
-	            {
-	            Material.DANDELION,
-	            Material.POPPY,
-	            Material.BLUE_ORCHID,
-	            Material.ALLIUM,
-	            Material.AZURE_BLUET,
-	            Material.RED_TULIP,
-	            Material.ORANGE_TULIP,
-	            Material.WHITE_TULIP,
-	           	Material.PINK_TULIP,
-	            Material.OXEYE_DAISY,
-	            Material.CORNFLOWER,
-	            Material.LILY_OF_THE_VALLEY,
-	            Material.ROSE_BUSH,
-	            Material.LILAC,
-	            Material.PEONY,
-	            Material.SUNFLOWER,
-	            Material.WITHER_ROSE
-	            
-	              };
+		ArrayList<Material> flowers = new ArrayList<Material>( Arrays.asList(
+
+                Material.DANDELION,
+                Material.POPPY,
+                Material.BLUE_ORCHID,
+                Material.ALLIUM,
+                Material.AZURE_BLUET,
+                Material.RED_TULIP,
+                Material.ORANGE_TULIP,
+                Material.WHITE_TULIP,
+                Material.PINK_TULIP,
+                Material.OXEYE_DAISY,
+                Material.CORNFLOWER,
+                Material.LILY_OF_THE_VALLEY,
+                Material.ROSE_BUSH,
+                Material.LILAC,
+                Material.PEONY,
+                Material.SUNFLOWER,
+                Material.WITHER_ROSE
+
+               ) );
 
 	    if(flowers.contains(block.getType())){
         	
