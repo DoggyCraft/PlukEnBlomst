@@ -1,0 +1,16 @@
+name: PlukEnBlomst
+author: Amqlie
+version: ${project.version}
+api-version: 1.14
+website: "http://dev.bukkit.org/server-mods/plukenblomst"
+main: com.amqlie.PlukEnBlomst
+commands:
+  company:
+    description: "Controls the plukenblomst plugin"
+    usage: /blomst
+permissions: 
+  plukenblomst.*: 
+    children: 
+      plukenblomst.help: true
+    default: false
+    description: "Gives access to all plukenblomst commands"
