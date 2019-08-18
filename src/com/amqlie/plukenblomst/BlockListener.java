@@ -1,16 +1,19 @@
 package com.amqlie.plukenblomst;
 
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-
 public class BlockListener implements Listener
 {
 	// Will be called when this BlockListener is created
-	BlockListener()
+	BlockListener(
+			)
 	{
 	}
 	
@@ -28,7 +31,38 @@ public class BlockListener implements Listener
 	@EventHandler
 	public void OnBlockBreak(BlockBreakEvent event)
 	{
-		// Do stuff		
+		
+		Block block = event.getBlock();
+		Player player = event.getPlayer();
+		Material[] flowers = new Material[] 
+	            {
+	            Material.DANDELION,
+	            Material.POPPY,
+	            Material.BLUE_ORCHID,
+	            Material.ALLIUM,
+	            Material.AZURE_BLUET,
+	            Material.RED_TULIP,
+	            Material.ORANGE_TULIP,
+	            Material.WHITE_TULIP,
+	           	Material.PINK_TULIP,
+	            Material.OXEYE_DAISY,
+	            Material.CORNFLOWER,
+	            Material.LILY_OF_THE_VALLEY,
+	            Material.ROSE_BUSH,
+	            Material.LILAC,
+	            Material.PEONY,
+	            Material.SUNFLOWER,
+	            Material.WITHER_ROSE
+	            
+	              };
+
+        if(flowers.contains(block.getType())){
+        	
+			PlukEnBlomst.numberOfFlowersPicked++;
+		}
+
+        
+        }
 	}
 	
 	

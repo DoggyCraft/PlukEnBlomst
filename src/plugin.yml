@@ -3,9 +3,10 @@ author: Amqlie
 version: ${project.version}
 api-version: 1.14
 website: "http://dev.bukkit.org/server-mods/plukenblomst"
-main: com.amqlie.PlukEnBlomst
+main: com.amqlie.plukenblomst.PlukEnBlomst
 commands:
-  company:
+  blomst:
+    aliases: [flower]
     description: "Controls the plukenblomst plugin"
     usage: /blomst
 permissions: 
