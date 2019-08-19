@@ -13,7 +13,7 @@ public class PlukEnBlomst extends JavaPlugin
 	static int numberOfFlowersPicked;
 	public void log(String message)
 	{
-		Logger.getLogger("minecraft").info(message);
+		Logger.getLogger("minecraft").info("PlukEnBlomst er aktiveret uden fejl.");
 	}
 	
 	public void onEnable()
