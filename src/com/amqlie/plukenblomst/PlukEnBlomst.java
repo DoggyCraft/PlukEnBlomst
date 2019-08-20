@@ -2,6 +2,7 @@ package com.amqlie.plukenblomst;
 
 import java.util.logging.Logger;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class PlukEnBlomst extends JavaPlugin
 	{
 		// Do stuff here when a player uses a command
 		Player player = (Player)sender;
-		player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + numberOfFlowersPicked + ChatColor.AQUA +  " blomst(er)");
+		player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + numberOfFlowersPicked.get(player.getUniqueId) + ChatColor.AQUA +  " blomst(er)");
 	
 		
 		return true;
