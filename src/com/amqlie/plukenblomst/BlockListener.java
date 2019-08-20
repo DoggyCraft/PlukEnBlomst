@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class BlockListener implements Listener
@@ -59,10 +60,20 @@ public class BlockListener implements Listener
 
 	    if(flowers.contains(block.getType())){
         	
-			PlukEnBlomst.numberOfFlowersPicked++;
+	    	int number = PlukEnBlomst.numberOfFlowersPicked.get(player.getUniqueId());
+	    	number++;
+	    	PlukEnBlomst.numberOfFlowersPicked.put(player.getUniqueId(), number);
 		}
 
         
+	}
+	
+	
+	@EventHandler
+	public void PickupItem(EntityPickupItemEvent e) {
+		
+		
+		
 	}
 	
 	
