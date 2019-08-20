@@ -35,7 +35,7 @@ public class PlukEnBlomst extends JavaPlugin
 	{
 		// Do stuff here when a player uses a command
 		Player player = (Player)sender;
-		player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + numberOfFlowersPicked.get(player.getUniqueId) + ChatColor.AQUA +  " blomst(er)");
+		player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + numberOfFlowersPicked.get(player.getUniqueId()) + ChatColor.AQUA +  " blomst(er)");
 	
 		
 		return true;
