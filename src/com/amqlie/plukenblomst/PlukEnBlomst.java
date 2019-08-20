@@ -1,5 +1,7 @@
 package com.amqlie.plukenblomst;
 
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -11,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PlukEnBlomst extends JavaPlugin
 {
-	static int numberOfFlowersPicked;
+	public static HashMap<UUID, Integer> numberOfFlowersPicked = new HashMap<UUID, Integer>();
 	public void log(String message)
 	{
 		Logger.getLogger("minecraft").info("PlukEnBlomst er aktiveret uden fejl.");
