@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class PlukEnBlomst extends JavaPlugin
 {
 	public static HashMap<UUID, Integer> numberOfFlowersHarvested = new HashMap<UUID, Integer>();
-	public static HashMap<UUID, Integer> numberOfFlowersPickedUp;
+	public static HashMap<UUID, Integer> numberOfFlowersPickedUp = new HashMap<UUID, Integer>();
 	
 	public void log(String message)
 	{
