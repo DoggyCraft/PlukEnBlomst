@@ -18,26 +18,27 @@ public class PlukEnBlomst extends JavaPlugin
 	
 	public void log(String message)
 	{
-		Logger.getLogger("minecraft").info("PlukEnBlomst er aktiveret uden fejl.");
+		Logger.getLogger("minecraft").info(message);
 	}
 	
 	public void onEnable()
 	{
-		// We want to listen for block events, so register our block listener
+
 		getServer().getPluginManager().registerEvents(new BlockListener(), this);
 	}
 
 	public void onDisable()
 	{
-		// Do stuff when the plugin is disabled, like saving configuration
+
 	}	
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
-		// Do stuff here when a player uses a command
+
 		Player player = (Player)sender;
-		player.sendMessage(ChatColor.AQUA + "Du har høstet " + ChatColor.GOLD + numberOfFlowersHarvested.get(player.getUniqueId()) + ChatColor.AQUA +  " blomst(er)");
+		player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + numberOfFlowersHarvested.get(player.getUniqueId()) + ChatColor.AQUA +  " blomst(er)");
+		player.sendMessage(ChatColor.AQUA + "Du har samlet " + ChatColor.GOLD + numberOfFlowersPickedUp.get(player.getUniqueId()) + ChatColor.AQUA +  " blomst(er) op");
 	
 		
 		return true;
