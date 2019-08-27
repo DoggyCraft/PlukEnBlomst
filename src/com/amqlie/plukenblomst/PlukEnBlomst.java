@@ -58,13 +58,13 @@ public class PlukEnBlomst extends JavaPlugin{
 		{
 		     String playerName = getServer().getOfflinePlayer(playerId).getName();
 		     int number = PlukEnBlomst.numberOfFlowersPickedUp.get(playerId);
-		     player.sendMessage(playerName + " har plukket " + number + " blomster");
+		     player.sendMessage(ChatColor.AQUA + playerName + " har plukket " + ChatColor.GOLD + number + ChatColor.AQUA + " blomster");
 		}
 		for(UUID playerId : PlukEnBlomst.numberOfFlowersHarvested.keySet())
 		{
 		     String playerName = getServer().getOfflinePlayer(playerId).getName();
 		     int number = PlukEnBlomst.numberOfFlowersHarvested.get(playerId);
-		     player.sendMessage(playerName + " har høstet " + number + " blomster");
+		     player.sendMessage(ChatColor.AQUA + playerName + " har høstet " + ChatColor.GOLD + number + ChatColor.AQUA + " blomster");
 		}
 		
 		if(PlukEnBlomst.numberOfFlowersHarvested.containsKey(player.getUniqueId()))
