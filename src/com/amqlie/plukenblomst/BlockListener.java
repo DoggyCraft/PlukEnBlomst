@@ -51,6 +51,11 @@ public class BlockListener implements Listener
 
 	    if(flowers.contains(block.getType())){
         	
+	    	if(!PlukEnBlomst.numberOfFlowersHarvested.containsKey(player.getUniqueId()))
+	    	{
+	    	    PlukEnBlomst.numberOfFlowersHarvested.put(player.getUniqueId(), 0);
+	    	}
+	    	
 	    	int number = PlukEnBlomst.numberOfFlowersHarvested.get(player.getUniqueId());
 	    	number++;
 	    	PlukEnBlomst.numberOfFlowersHarvested.put(player.getUniqueId(), number);
@@ -90,6 +95,10 @@ public class BlockListener implements Listener
 
 	    if(flowers.contains(event.getItem().getItemStack().getType())){
         	
+	    	if(!PlukEnBlomst.numberOfFlowersPickedUp.containsKey(entity.getUniqueId()))
+	    	{
+	    	    PlukEnBlomst.numberOfFlowersPickedUp.put(entity.getUniqueId(), 0);
+	    	}
 	    	int number = PlukEnBlomst.numberOfFlowersPickedUp.get(entity.getUniqueId());
 	    	number++;
 	    	PlukEnBlomst.numberOfFlowersPickedUp.put(entity.getUniqueId(), number);
