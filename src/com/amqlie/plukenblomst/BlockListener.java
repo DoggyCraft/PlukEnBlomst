@@ -22,7 +22,7 @@ public class BlockListener implements Listener
 	
 	
 	@EventHandler
-	public void OnBlockBreak(BlockBreakEvent event)
+	public void onBlockBreak(BlockBreakEvent event)
 	{
 		
 		Block block = event.getBlock();
@@ -66,10 +66,9 @@ public class BlockListener implements Listener
 	
 	
 	@EventHandler
-	public void PickupItem(EntityPickupItemEvent event) 
+	public void pickupItem(EntityPickupItemEvent event) 
 	{
 		
-		Item item = event.getItem();
 		Entity entity = event.getEntity();
 		ArrayList<Material> flowers = new ArrayList<Material>( Arrays.asList(
 

@@ -34,15 +34,17 @@ public class PlukEnBlomst extends JavaPlugin{
 		Logger.getLogger("minecraft").info(message);
 	}
 	
-	public void onEnable()
+    @Override
+    public void onEnable()
 	{
 
 		getServer().getPluginManager().registerEvents(new BlockListener(), this);
 	}
-
-	public void onDisable()
+	
+	@Override
+    public void onDisable()
 	{
-
+		//do nothing
 	}	
 	
 	@Override
