@@ -47,12 +47,37 @@ public class PlukEnBlomst extends JavaPlugin{
 		//do nothing
 	}	
 	
+	public void flowerPickMessage(player) {
+		
+		for(UUID playerId : PlukEnBlomst.numberOfFlowersPickedUp.keySet())
+		{
+		     String playerName = getServer().getOfflinePlayer(playerId).getName();
+		     int number = PlukEnBlomst.numberOfFlowersPickedUp.get(playerId);
+		     player.sendMessage(ChatColor.AQUA + playerName + " har plukket " + ChatColor.GOLD + number + ChatColor.AQUA + " blomster");
+		}
+	}
+	
+	public void flowerHarvestMessage( ) {
+		
+	}
+	
+	
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
 	    
 		Player player = (Player)sender;
 		Entity entity = (Entity)sender;
+		if (cmd.getName().equalsIgnoreCase("flower")){
+			if (sender instanceof Player) {
+				switch(args[0].toLowerCase()) {
+					case  "help" : break;
+					case  "picked" : this.flowerPickMessage(); break;
+					
+				}
+			}
+		}
 		
 		for(UUID playerId : PlukEnBlomst.numberOfFlowersPickedUp.keySet())
 		{
@@ -69,11 +94,11 @@ public class PlukEnBlomst extends JavaPlugin{
 		
 		if(PlukEnBlomst.numberOfFlowersHarvested.containsKey(player.getUniqueId()))
 	    {
-			player.sendMessage(ChatColor.AQUA + "Du har hÃ¸stet " + ChatColor.GOLD + numberOfFlowersHarvested.get(player.getUniqueId()) + ChatColor.AQUA +  " blomst(er)");
+			player.sendMessage(ChatColor.AQUA + "Du har høstet " + ChatColor.GOLD + numberOfFlowersHarvested.get(player.getUniqueId()) + ChatColor.AQUA +  " blomst(er)");
 	    }
 	    else
 	    {
-	        player.sendMessage(ChatColor.AQUA + "Du har ikke hÃ¸stet nogen blomster endnu. Kom nu igang!");
+	        player.sendMessage(ChatColor.AQUA + "Du har ikke høstet nogen blomster endnu. Kom nu igang!");
 	    }
 		
 		if(PlukEnBlomst.numberOfFlowersPickedUp.containsKey(player.getUniqueId()))

@@ -21,9 +21,10 @@ public class BlockListener implements Listener
 	
 	
 	@EventHandler
-	public void onBlockBreak(BlockBreakEvent event)
+	public int onBlockBreak(BlockBreakEvent event)
 	{
 		
+		int number = 0;
 		Block block = event.getBlock();
 		Player player = event.getPlayer();
 		ArrayList<Material> flowers = new ArrayList<Material>( Arrays.asList(
@@ -55,19 +56,20 @@ public class BlockListener implements Listener
 	    	    PlukEnBlomst.numberOfFlowersHarvested.put(player.getUniqueId(), 0);
 	    	}
 	    	
-	    	int number = PlukEnBlomst.numberOfFlowersHarvested.get(player.getUniqueId());
+	    	number = PlukEnBlomst.numberOfFlowersHarvested.get(player.getUniqueId());
 	    	number++;
 	    	PlukEnBlomst.numberOfFlowersHarvested.put(player.getUniqueId(), number);
 		}
-
+	return number;
         
 	}
 	
 	
 	@EventHandler
-	public void pickupItem(EntityPickupItemEvent event) 
+	public int pickupItem(EntityPickupItemEvent event) 
 	{
 		
+		int number = 0;
 		Entity entity = event.getEntity();
 		ArrayList<Material> flowers = new ArrayList<Material>( Arrays.asList(
 
@@ -97,11 +99,13 @@ public class BlockListener implements Listener
 	    	{
 	    	    PlukEnBlomst.numberOfFlowersPickedUp.put(entity.getUniqueId(), 0);
 	    	}
-	    	int number = PlukEnBlomst.numberOfFlowersPickedUp.get(entity.getUniqueId());
+	    	number = PlukEnBlomst.numberOfFlowersPickedUp.get(entity.getUniqueId());
 	    	number++;
 	    	PlukEnBlomst.numberOfFlowersPickedUp.put(entity.getUniqueId(), number);
+	    	
+	    	
 		}
-		
+	return number;
 		
 		
 		
