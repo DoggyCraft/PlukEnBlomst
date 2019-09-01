@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin; 
 
@@ -54,7 +53,7 @@ public class PlukEnBlomst extends JavaPlugin{
 		for(UUID playerId : PlukEnBlomst.numberOfFlowersPickedUp.keySet()) {
 		     String playerName = getServer().getOfflinePlayer(playerId).getName();
 		     int number = PlukEnBlomst.numberOfFlowersPickedUp.get(playerId);
-		     player.sendMessage(ChatColor.AQUA + playerName + " har samlet " + ChatColor.GOLD + number + ChatColor.AQUA + " blomst(er) op");
+		     player.sendMessage(ChatColor.AQUA + playerName + " har samlet " + ChatColor.GOLD + number + ChatColor.AQUA + " blomster op");
 		}
 	}
 	
@@ -63,7 +62,7 @@ public class PlukEnBlomst extends JavaPlugin{
 		for(UUID playerId : PlukEnBlomst.numberOfFlowersHarvested.keySet()) {
 		     String playerName = getServer().getOfflinePlayer(playerId).getName();
 		     int number = PlukEnBlomst.numberOfFlowersHarvested.get(playerId);
-		     player.sendMessage(ChatColor.AQUA + playerName + " har plukket " + ChatColor.GOLD + number + ChatColor.AQUA + " blomst(er)");
+		     player.sendMessage(ChatColor.AQUA + playerName + " har plukket " + ChatColor.GOLD + number + ChatColor.AQUA + " blomster");
 		}
 	}
 	
@@ -74,9 +73,8 @@ public class PlukEnBlomst extends JavaPlugin{
 	{
 	    
 		Player player = (Player)sender;
-		if (cmd.getName().equalsIgnoreCase("flower")){
-			if (sender instanceof Player) {
-				Player target = sender.getServer().getPlayer(args[0]);
+		if(cmd.getName().equalsIgnoreCase("flower") && sender instanceof Player){
+				Player target = sender.getServer().getPlayer(args[1]);
 				
 				if (args.length == 0) {
 					if(PlukEnBlomst.numberOfFlowersHarvested.containsKey(player.getUniqueId())) {
@@ -96,13 +94,12 @@ public class PlukEnBlomst extends JavaPlugin{
 				
 				if (args.length == 1) {
 					switch(args[0].toLowerCase()) {
-						case  "help" : break;
 						case  "pickedup" : this.flowerPickedUpMessage(player, target); break;
 						case  "harvest" : this.flowerHarvestMessage(player, target); break;
+						case  "help" : break;
 					}	
 				}
-			}
-		}
+			}		
 		
 		return true;
 	}
