@@ -2,6 +2,7 @@ package com.amqlie.plukenblomst;
 
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -14,20 +15,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PlukEnBlomst extends JavaPlugin{
 	
-	public static HashMap<UUID, Integer> numberOfFlowersHarvested = new HashMap<UUID, Integer>();
-	public static HashMap<UUID, Integer> numberOfFlowersPickedUp = new HashMap<UUID, Integer>();
+	public static HashMap<UUID, Integer> numberOfFlowersHarvested = new HashMap<>();
+	public static HashMap<UUID, Integer> numberOfFlowersPickedUp = new HashMap<>();
 	
 	
 	public  String convertToUTF8(String text)
 	{
-	  try
-	  {
-		  return new String(text.getBytes(), "UTF-8");
-	  }
-	  catch (UnsupportedEncodingException e)
-	  {
-		  return "Kunne ikke konvertere det der til unicode. Lort.";
-	  }
+		
+		return new String(text.getBytes(StandardCharsets.UTF_8));
 	  } 
 	
 	public void log(String message)
@@ -48,7 +43,7 @@ public class PlukEnBlomst extends JavaPlugin{
 		//do nothing
 	}	
 	
-	public void flowerPickedUpMessage(Player player, Player target) {
+	public void flowerPickedUpMessage(Player player) {
 		
 		for(UUID playerId : PlukEnBlomst.numberOfFlowersPickedUp.keySet()) {
 		     String playerName = getServer().getOfflinePlayer(playerId).getName();
@@ -57,7 +52,7 @@ public class PlukEnBlomst extends JavaPlugin{
 		}
 	}
 	
-	public void flowerHarvestMessage(Player player, Player target) {
+	public void flowerHarvestMessage(Player player) {
 		
 		for(UUID playerId : PlukEnBlomst.numberOfFlowersHarvested.keySet()) {
 		     String playerName = getServer().getOfflinePlayer(playerId).getName();
@@ -94,8 +89,8 @@ public class PlukEnBlomst extends JavaPlugin{
 				
 				if (args.length == 1) {
 					switch(args[0].toLowerCase()) {
-						case  "pickedup" : this.flowerPickedUpMessage(player, target); break;
-						case  "harvest" : this.flowerHarvestMessage(player, target); break;
+						case  "pickedup" : this.flowerPickedUpMessage(player); break;
+						case  "harvest" : this.flowerHarvestMessage(player); break;
 						case  "help" : break;
 					}	
 				}

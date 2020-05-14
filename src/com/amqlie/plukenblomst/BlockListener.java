@@ -27,7 +27,7 @@ public class BlockListener implements Listener
 		int number = 0;
 		Block block = event.getBlock();
 		Player player = event.getPlayer();
-		ArrayList<Material> flowers = new ArrayList<Material>( Arrays.asList(
+		ArrayList<Material> flowers = new ArrayList<>( Arrays.asList(
 
                 Material.DANDELION,
                 Material.POPPY,
@@ -71,7 +71,7 @@ public class BlockListener implements Listener
 		
 		int number = 0;
 		Entity entity = event.getEntity();
-		ArrayList<Material> flowers = new ArrayList<Material>( Arrays.asList(
+		ArrayList<Material> flowers = new ArrayList<>( Arrays.asList(
 
                 Material.DANDELION,
                 Material.POPPY,
