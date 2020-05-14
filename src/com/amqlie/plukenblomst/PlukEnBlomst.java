@@ -3,6 +3,7 @@ package com.amqlie.plukenblomst;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -14,8 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PlukEnBlomst extends JavaPlugin{
 	
-	public static HashMap<UUID, Integer> numberOfFlowersHarvested = new HashMap<>();
-	public static HashMap<UUID, Integer> numberOfFlowersPickedUp = new HashMap<>();
+	public static final Map<UUID, Integer> numberOfFlowersHarvested = new HashMap<>();
+	public static final Map<UUID, Integer> numberOfFlowersPickedUp = new HashMap<>();
 	
 	
 	public  String convertToUTF8(String text)
