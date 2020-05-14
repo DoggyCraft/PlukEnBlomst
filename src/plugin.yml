@@ -1,7 +1,7 @@
 name: PlukEnBlomst
 author: Amqlie
 version: ${project.version}
-api-version: 1.14.4
+api-version: 1.14
 website: http://dev.bukkit.org/server-mods/plukenblomst
 description: This plugin will tell you how much flowers you've harvested
 
