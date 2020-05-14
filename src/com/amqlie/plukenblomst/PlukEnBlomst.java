@@ -1,7 +1,6 @@
 package com.amqlie.plukenblomst;
 
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.UUID;
@@ -43,7 +42,7 @@ public class PlukEnBlomst extends JavaPlugin{
 		//do nothing
 	}	
 	
-	public void flowerPickedUpMessage(Player player) {
+	public void flowerPickedUpMessage(Player player, Player target) {
 		
 		for(UUID playerId : PlukEnBlomst.numberOfFlowersPickedUp.keySet()) {
 		     String playerName = getServer().getOfflinePlayer(playerId).getName();
@@ -52,7 +51,7 @@ public class PlukEnBlomst extends JavaPlugin{
 		}
 	}
 	
-	public void flowerHarvestMessage(Player player) {
+	public void flowerHarvestMessage(Player player, Player target) {
 		
 		for(UUID playerId : PlukEnBlomst.numberOfFlowersHarvested.keySet()) {
 		     String playerName = getServer().getOfflinePlayer(playerId).getName();
@@ -89,9 +88,17 @@ public class PlukEnBlomst extends JavaPlugin{
 				
 				if (args.length == 1) {
 					switch(args[0].toLowerCase()) {
-						case  "pickedup" : this.flowerPickedUpMessage(player); break;
-						case  "harvest" : this.flowerHarvestMessage(player); break;
-						case  "help" : break;
+						case  "pickedup":
+							this.flowerPickedUpMessage(player, target);
+							break;
+						case  "harvest": 
+							this.flowerHarvestMessage(player, target);
+							break;
+						case  "help":
+							break;
+						default: 
+							player.sendMessage(ChatColor.RED + "Dette argument findes ikke");
+							break;
 					}	
 				}
 			}		
