@@ -1,8 +1,10 @@
 name: PlukEnBlomst
+author: Amqlie
 version: ${project.version}
+api-version: 1.14
+website: "http://dev.bukkit.org/server-mods/plukenblomst"
 description: This plugin will tell you how much flowers you've harvested
-author: Amqlie 
-website: http://dev.bukkit.org/server-mods/plukenblomst
+
 
 main: com.amqlie.plukenblomst.PlukEnBlomst
 database: false
@@ -18,4 +20,4 @@ permissions:
    children: 
      plukenblomst.help: true
    default: false
-   description: "Gives access to all plukenblomst commands"
+   description: "Gives access to all plukenblomst commands
