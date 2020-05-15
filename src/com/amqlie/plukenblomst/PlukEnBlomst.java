@@ -15,8 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PlukEnBlomst extends JavaPlugin{
 	
-	public static final Map<UUID, Integer> numberOfFlowersHarvested = new HashMap<>();
-	public static final Map<UUID, Integer> numberOfFlowersPickedUp = new HashMap<>();
+	static final Map<UUID, Integer> numberOfFlowersHarvested = new HashMap<>();
+	static final Map<UUID, Integer> numberOfFlowersPickedUp = new HashMap<>();
 	
 	
 	public  String convertToUTF8(String text)
@@ -80,7 +80,7 @@ public class PlukEnBlomst extends JavaPlugin{
 				    }
 					
 					if(PlukEnBlomst.numberOfFlowersPickedUp.containsKey(player.getUniqueId())) {
-						player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + numberOfFlowersPickedUp.get(player.getUniqueId()) + ChatColor.AQUA +  " blomst(er)");
+						player.sendMessage(ChatColor.AQUA + "Du har plukket " 	+ ChatColor.GOLD + numberOfFlowersPickedUp.get(player.getUniqueId()) + ChatColor.AQUA +  " blomst(er)");
 				    }
 				    else {
 				        player.sendMessage(ChatColor.AQUA + "Du har ikke plukket nogen blomster endnu. Kom nu igang!");
