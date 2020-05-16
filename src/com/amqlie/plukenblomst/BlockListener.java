@@ -88,7 +88,8 @@ public class BlockListener implements Listener
 
 	    if(flowers.contains(event.getItem().getItemStack().getType())){
 	    	int pickedup = plugin.getConfig().getInt("PickedUp.player." + entity.getName());
-	    	int total = pickedup + 1;
+	    	int antal = event.getItem().getItemStack().getAmount();
+	    	int total = pickedup + antal;
 	        plugin.config.set("PickedUp.player." + entity.getName(), total);
 	        plugin.saveConfig();
 	    	

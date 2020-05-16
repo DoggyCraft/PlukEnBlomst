@@ -40,7 +40,7 @@ public class PlukEnBlomst extends JavaPlugin{
 	}	
 	
 	public void flowerPickedUpMessage(Player player, Player target) {
-		int pickeduptarget = getConfig().getInt("Harvested.player." + target.getName());
+		int pickeduptarget = getConfig().getInt("PickedUp.player." + target.getName());
 		player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har samlet " + ChatColor.GOLD + pickeduptarget + ChatColor.AQUA + " blomst(er) op");
 	}
 	
@@ -60,19 +60,19 @@ public class PlukEnBlomst extends JavaPlugin{
 		if(cmd.getName().equalsIgnoreCase("blomst") && sender instanceof Player){
 				
 				Player player = (Player)sender;
-				int Harvested = getConfig().getInt("Harvested.player." + player.getName());
-				int PickedUp = getConfig().getInt("PickedUp.player." + player.getName());
+				int harvested = getConfig().getInt("Harvested.player." + player.getName());
+				int pickedup = getConfig().getInt("PickedUp.player." + player.getName());
 				
 				if (args.length == 0) {
-					if(Harvested >= 1) {
-						player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + Harvested + ChatColor.AQUA +  " blomst(er)");
+					if(harvested >= 1) {
+						player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + harvested + ChatColor.AQUA +  " blomst(er)");
 				    }
 				    else {
 				        player.sendMessage(ChatColor.AQUA + "Du har ikke plukket nogen blomster endnu. Kom nu igang!");
 				    }
 					
-					if(PickedUp >= 1) {
-						player.sendMessage(ChatColor.AQUA + "Du har samlet " + ChatColor.GOLD + PickedUp + ChatColor.AQUA +  " blomst(er)");
+					if(pickedup >= 1) {
+						player.sendMessage(ChatColor.AQUA + "Du har samlet " + ChatColor.GOLD + pickedup + ChatColor.AQUA +  " blomst(er)");
 				    }
 				    else {
 				        player.sendMessage(ChatColor.AQUA + "Du har ikke samlet nogen blomster op endnu. Kom nu igang!");
@@ -81,25 +81,29 @@ public class PlukEnBlomst extends JavaPlugin{
 				
 				if (args.length == 1) {
 					if (args[0].equalsIgnoreCase("help")) {
-						player.sendMessage(ChatColor.RED + "Du skal skrive  " + ChatColor.GOLD + "/blomst" + ChatColor.RED + " eller " + ChatColor.GOLD + "/blomst (spiller)");
+						player.sendMessage(ChatColor.RED + "Du skal skrive " + ChatColor.GOLD + "/blomst" + ChatColor.RED + " eller " + ChatColor.GOLD + "/blomst (spiller)");
 					} else {
 						Player target = sender.getServer().getPlayer(args[0]);
-						int harvestedtarget = getConfig().getInt("Harvested.player." + target.getName());
-						int pickeduptarget = getConfig().getInt("PickedUp.player." + target.getName());
-						if(harvestedtarget >= 1) {
-							this.flowerHarvestMessage(player, target);  
+						if(target == null) {
+							player.sendMessage(ChatColor.RED + "Denne spiller findes ikke");
 						} else {
-							player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har ikke plukket nogen blomster");
+							int harvestedtarget = getConfig().getInt("Harvested.player." + target.getName());
+							int pickeduptarget = getConfig().getInt("PickedUp.player." + target.getName());
+							if(harvestedtarget >= 1) {
+								this.flowerHarvestMessage(player, target);  
+							} else {
+								player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har ikke plukket nogen blomster");
+							}
+							if(pickeduptarget >= 1) {
+								this.flowerPickedUpMessage(player, target);  
+							} else {
+								player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har ikke samlet nogle blomster op");
+						    }
 						}
-						if(pickeduptarget >= 1) {
-							this.flowerPickedUpMessage(player, target);  
-						} else {
-							player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har ikke samlet nogle blomster op");
-					    }
 					}	
 				}
 			} else {
-				System.out.println(ChatColor.RED + "Du skal være en spiller for at skrive denne kommando.");
+				System.out.println("Du skal være en spiller for at skrive denne kommando.");
 			}
 		
 		return true;
