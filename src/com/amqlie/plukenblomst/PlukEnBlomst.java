@@ -67,9 +67,13 @@ public class PlukEnBlomst extends JavaPlugin{
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
 	    
-		Player player = (Player)sender;
-		if(cmd.getName().equalsIgnoreCase("flower") && sender instanceof Player){
+		
+		if(cmd.getName().equalsIgnoreCase("blomst") && sender instanceof Player){
+
+				Player player = (Player)sender;
 				Player target = sender.getServer().getPlayer(args[1]);
+				
+				player.sendMessage("Test");
 				
 				if (args.length == 0) {
 					if(PlukEnBlomst.numberOfFlowersHarvested.containsKey(player.getUniqueId())) {
@@ -88,22 +92,17 @@ public class PlukEnBlomst extends JavaPlugin{
 				}
 				
 				if (args.length == 1) {
-					switch(args[0].toLowerCase()) {
-						case  "pickedup":
-							this.flowerPickedUpMessage(player, target);
-							break;
-						case  "harvest": 
-							this.flowerHarvestMessage(player, target);
-							break;
-						case  "help":
-							break;
-						default: 
-							player.sendMessage(ChatColor.RED + "Dette argument findes ikke");
-							break;
+					if (args[0].equalsIgnoreCase("help")) {
+						player.sendMessage(ChatColor.RED + "Du skal skrive" + ChatColor.GOLD + "/blomst" + ChatColor.RED + "eller" + ChatColor.GOLD + "/blomst (spiller)");
+						return true;
+					} else {
+						this.flowerPickedUpMessage(player, target); 
+						this.flowerHarvestMessage(player, target);
 					}	
 				}
 			}		
 		
 		return true;
 	}
+
 }
