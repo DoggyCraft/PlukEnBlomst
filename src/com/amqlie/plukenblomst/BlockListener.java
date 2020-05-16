@@ -15,16 +15,17 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 public class BlockListener implements Listener
 {
 
-	BlockListener()
-	{
-	}
+    PlukEnBlomst plugin;
+
+    BlockListener(PlukEnBlomst plugin)
+    {
+        this.plugin = plugin;
+    }
 	
 	
 	@EventHandler
 	public int onBlockBreak(BlockBreakEvent event)
 	{
-		
-		int number = 0;
 		Block block = event.getBlock();
 		Player player = event.getPlayer();
 		ArrayList<Material> flowers = new ArrayList<>( Arrays.asList(
@@ -50,26 +51,18 @@ public class BlockListener implements Listener
                ) );
 
 	    if(flowers.contains(block.getType())){
-        	
-	    	if(!PlukEnBlomst.numberOfFlowersHarvested.containsKey(player.getUniqueId()))
-	    	{
-	    	    PlukEnBlomst.numberOfFlowersHarvested.put(player.getUniqueId(), 0);
-	    	}
-	    	
-	    	number = PlukEnBlomst.numberOfFlowersHarvested.get(player.getUniqueId());
-	    	number++;
-	    	PlukEnBlomst.numberOfFlowersHarvested.put(player.getUniqueId(), number);
+	    	int Harvested = plugin.getConfig().getInt("Harvested.player." + player.getName());
+	    	int total = Harvested + 1;
+	        plugin.config.set("Harvested.player." + player.getName(), total);
+	        plugin.saveConfig();
 		}
-	return number;
-        
+        return 0;
 	}
 	
 	
 	@EventHandler
 	public int pickupItem(EntityPickupItemEvent event) 
 	{
-		
-		int number = 0;
 		Entity entity = event.getEntity();
 		ArrayList<Material> flowers = new ArrayList<>( Arrays.asList(
 
@@ -94,20 +87,12 @@ public class BlockListener implements Listener
                ) );
 
 	    if(flowers.contains(event.getItem().getItemStack().getType())){
-        	
-	    	if(!PlukEnBlomst.numberOfFlowersPickedUp.containsKey(entity.getUniqueId()))
-	    	{
-	    	    PlukEnBlomst.numberOfFlowersPickedUp.put(entity.getUniqueId(), 0);
-	    	}
-	    	number = PlukEnBlomst.numberOfFlowersPickedUp.get(entity.getUniqueId());
-	    	number++;
-	    	PlukEnBlomst.numberOfFlowersPickedUp.put(entity.getUniqueId(), number);
-	    	
+	    	int PickedUp = plugin.getConfig().getInt("PickedUp.player." + entity.getName());
+	    	int total = PickedUp + 1;
+	        plugin.config.set("PickedUp.player." + entity.getName(), total);
+	        plugin.saveConfig();
 	    	
 		}
-	return number;
-		
-		
-		
+		return 0;
 	}	
 }
