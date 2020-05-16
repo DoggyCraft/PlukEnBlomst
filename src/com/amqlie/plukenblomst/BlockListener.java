@@ -51,8 +51,8 @@ public class BlockListener implements Listener
                ) );
 
 	    if(flowers.contains(block.getType())){
-	    	int Harvested = plugin.getConfig().getInt("Harvested.player." + player.getName());
-	    	int total = Harvested + 1;
+	    	int harvested = plugin.getConfig().getInt("Harvested.player." + player.getName());
+	    	int total = harvested + 1;
 	        plugin.config.set("Harvested.player." + player.getName(), total);
 	        plugin.saveConfig();
 		}
@@ -87,8 +87,8 @@ public class BlockListener implements Listener
                ) );
 
 	    if(flowers.contains(event.getItem().getItemStack().getType())){
-	    	int PickedUp = plugin.getConfig().getInt("PickedUp.player." + entity.getName());
-	    	int total = PickedUp + 1;
+	    	int pickedup = plugin.getConfig().getInt("PickedUp.player." + entity.getName());
+	    	int total = pickedup + 1;
 	        plugin.config.set("PickedUp.player." + entity.getName(), total);
 	        plugin.saveConfig();
 	    	
