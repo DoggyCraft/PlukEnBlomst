@@ -17,9 +17,10 @@ public class Level {
         file = new File(Bukkit.getServer().getPluginManager().getPlugin("PlukEnBlomst").getDataFolder(), "level.yml");
  
         if (!file.exists()){
-            try{
-                file.createNewFile();
+        	try{
+            	file.createNewFile();
             }catch (IOException e){
+            	System.out.println("Couldn't create file");
             }
         }
         level = YamlConfiguration.loadConfiguration(file);
@@ -40,5 +41,4 @@ public class Level {
     public static void reload(){
         level = YamlConfiguration.loadConfiguration(file);
     }
- 
 }

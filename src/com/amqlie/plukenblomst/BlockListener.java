@@ -1,8 +1,10 @@
 package com.amqlie.plukenblomst;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,11 +18,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class BlockListener implements Listener
-{
-
+public class BlockListener implements Listener 
+{	
     PlukEnBlomst plugin;
-
+    
     BlockListener(PlukEnBlomst plugin)
     {
         this.plugin = plugin;
@@ -28,7 +29,7 @@ public class BlockListener implements Listener
 	
 	
 	@EventHandler
-	public int onBlockBreak(BlockBreakEvent event)
+	public int onBlockBreak(BlockBreakEvent event) throws NoSuchAlgorithmException, NoSuchProviderException
 	{
 		Block block = event.getBlock();
 		Player player = event.getPlayer();
@@ -102,8 +103,9 @@ public class BlockListener implements Listener
         	int needed = 2 * (level * level);
         	int flowerpowerLevelup = flowerpowerTotal - needed;
         	
-            Random r = new Random();
-            int choice = r.nextInt(100);
+
+            SecureRandom secureRandomGenerator = SecureRandom.getInstance("SHA1PRNG", "SUN");
+            int choice = secureRandomGenerator.nextInt(100);
             
         	if(choice < 30) {
 		        if(flowerpower >= 0) {
@@ -128,14 +130,12 @@ public class BlockListener implements Listener
 			        		while(flowerpower >= needed);
 		        		}
 		        }
-        	}
-        	if(choice < 20) {
-    			if(level > 10) {
+        	}else if(choice < 20) {
+    			if(level >= 10) {
     				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(event.getBlock().getType()));
     			}
-        	}
-        	if(choice < 5) {
-    			if(level > 20) {
+        	}else if(choice < 5) {
+    			if(level >= 20) {
     				event.setDropItems(false);
     				ItemStack item = new ItemStack(event.getBlock().getType(), 1);
     				item.addEnchantment(Enchantment.KNOCKBACK, 1);
