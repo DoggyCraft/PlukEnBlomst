@@ -107,8 +107,7 @@ public class BlockListener implements Listener
             SecureRandom secureRandomGenerator = SecureRandom.getInstance("SHA1PRNG", "SUN");
             int choice = secureRandomGenerator.nextInt(100);
             
-        	if(choice < 30) {
-		        if(flowerpower >= 0) {
+        	if(choice < 30 && flowerpower >= 0) {
 		        		player.sendMessage(ChatColor.AQUA + "Du fik " + ChatColor.GOLD + gainedFlowerpower + ChatColor.AQUA +" flowerpower");
 		        		Level.get().set("Flowerpower.player." + player.getName(), flowerpowerTotal);
 		        		Level.save();
@@ -130,22 +129,20 @@ public class BlockListener implements Listener
 			        		while(flowerpower >= needed);
 		        		}
 		        }
-        	}else if(choice < 20) {
-    			if(level >= 10) {
-    				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(event.getBlock().getType()));
-    			}
-        	}else if(choice < 5) {
-    			if(level >= 20) {
-    				event.setDropItems(false);
-    				ItemStack item = new ItemStack(event.getBlock().getType(), 1);
-    				item.addEnchantment(Enchantment.KNOCKBACK, 1);
-    				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
-    				player.sendMessage("Du fik en speciel blomst!");
-    			}
-    		}
+        	if(choice < 20 && level >= 10) {
+        		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(event.getBlock().getType()));
+        	}
+        	if(choice < 5 && level >= 20) {
+        		event.setDropItems(false);
+        		ItemStack item = new ItemStack(event.getBlock().getType(), 1);
+        		item.addEnchantment(Enchantment.KNOCKBACK, 1);
+        		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
+        		player.sendMessage("Du fik en speciel blomst!");
+        	}
+	    }
+	    
+	    return 0;
 		}
-        return 0;
-	}
 	
 	
 	@EventHandler

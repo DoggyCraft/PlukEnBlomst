@@ -3,6 +3,7 @@ package com.amqlie.plukenblomst;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -97,8 +98,7 @@ public class PlukEnBlomst extends JavaPlugin{
 					}
 				}
 				
-				if (args.length == 1) {
-					if (args[0].equalsIgnoreCase("help")) {
+				if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
 						player.sendMessage(ChatColor.RED + "Du skal skrive " + ChatColor.GOLD + "/blomst" + ChatColor.RED + " eller " + ChatColor.GOLD + "/blomst (spiller)");
 					} else if (args[0].equalsIgnoreCase("reload")) {
 						if(player.hasPermission("PlukEnBlomst.staff")) {
@@ -111,8 +111,7 @@ public class PlukEnBlomst extends JavaPlugin{
 							player.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[FEJL]" + ChatColor.RED + " Dette har du vidst ikke adgang til.");
 						}
 					}
-				}else if (args.length == 2) {
-					if (args[1].equalsIgnoreCase("info")) {
+				if (args.length == 2 && args[1].equalsIgnoreCase("info")) {
 							Player target = sender.getServer().getPlayer(args[1]);
 							if(target == null) {
 								player.sendMessage(ChatColor.RED + "Denne spiller findes ikke");
@@ -142,10 +141,11 @@ public class PlukEnBlomst extends JavaPlugin{
 						    }
 						}
 					}	
-				} 
+				 
 		
 		return true;
 	}
+	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		if (args.length == 1){
 			List<String> arguments = new ArrayList<>();
@@ -155,8 +155,7 @@ public class PlukEnBlomst extends JavaPlugin{
  
 			return arguments;
 			
-		}else if (args.length == 2){
-			if (args[1].equalsIgnoreCase("info")) {
+		}else if (args.length == 2 && args[1].equalsIgnoreCase("info")) {
 				List<String> playerNames = new ArrayList<>();
 				Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
 				Bukkit.getServer().getOnlinePlayers().toArray(players);
@@ -166,8 +165,7 @@ public class PlukEnBlomst extends JavaPlugin{
 				
 				return playerNames;
 			}
-		}
-		return null;
+		return Collections.emptyList();
     }
 
 }

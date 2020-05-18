@@ -6,12 +6,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
  
 import java.io.File;
 import java.io.IOException;
- 
+
 public class Level {
- 
-    private static File file;
+	
+	private static File file;
     private static FileConfiguration level;
  
+    private Level() {
+    	throw new IllegalStateException("Level class");
+    }
     
     public static void setup(){
         file = new File(Bukkit.getServer().getPluginManager().getPlugin("PlukEnBlomst").getDataFolder(), "level.yml");
@@ -19,6 +22,9 @@ public class Level {
         if (!file.exists()){
         	try{
             	file.createNewFile();
+            	  if (!file.createNewFile()) {
+            		  System.out.println("Couldn't create file");
+            		  }
             }catch (IOException e){
             	System.out.println("Couldn't create file");
             }
