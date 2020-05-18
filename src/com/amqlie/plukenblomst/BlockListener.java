@@ -2,15 +2,19 @@ package com.amqlie.plukenblomst;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class BlockListener implements Listener
 {
@@ -55,6 +59,90 @@ public class BlockListener implements Listener
 	    	int total = harvested + 1;
 	        plugin.config.set("Harvested.player." + player.getName(), total);
 	        plugin.saveConfig();
+	        
+	    	Integer gainedFlowerpower;
+	    	switch(block.getType())
+	    	{
+	    	case DANDELION:
+	    	case POPPY:
+	    	case BLUE_ORCHID:
+	    	case ALLIUM:
+	    		gainedFlowerpower = 2;
+	    		break;
+	    	case AZURE_BLUET:
+	    	case RED_TULIP:
+	    	case ORANGE_TULIP:
+	    	case WHITE_TULIP:
+	    		gainedFlowerpower = 1;
+	    		break;
+	    	case PINK_TULIP:
+	    	case OXEYE_DAISY:
+	    	case CORNFLOWER:
+	    	case LILY_OF_THE_VALLEY:
+	    		gainedFlowerpower = 4;
+	    		break;
+	    	case ROSE_BUSH:
+	    	case LILAC:
+	    	case PEONY:
+	    	case SUNFLOWER:
+	    		gainedFlowerpower = 3;
+	    		break;
+	    	case WITHER_ROSE:
+	    		gainedFlowerpower = 20;
+	    		break;
+			default:
+				gainedFlowerpower = 0;
+				break;
+	    	}
+	    	
+	        int level = Level.get().getInt("Level.player." + player.getName());
+	        int levelup = level + 1;
+	        int flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
+	        int flowerpowerTotal = flowerpower + gainedFlowerpower;
+        	int needed = 2 * (level * level);
+        	int flowerpowerLevelup = flowerpowerTotal - needed;
+        	
+            Random r = new Random();
+            int choice = r.nextInt(100);
+            
+        	if(choice < 30) {
+		        if(flowerpower >= 0) {
+		        		player.sendMessage(ChatColor.AQUA + "Du fik " + ChatColor.GOLD + gainedFlowerpower + ChatColor.AQUA +" flowerpower");
+		        		Level.get().set("Flowerpower.player." + player.getName(), flowerpowerTotal);
+		        		Level.save();
+		        		flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
+		        		needed = 2 * (level * level);
+		        		if(flowerpower >= needed) {
+			        		do {
+				        		player.sendMessage(ChatColor.AQUA + "Og du kom op i level " + ChatColor.GOLD + levelup + ChatColor.AQUA +"!");
+				        		Level.get().set("Level.player." + player.getName(), levelup);
+				        		Level.get().set("Flowerpower.player." + player.getName(), flowerpowerLevelup);
+				    	 	    Level.save();
+				    	 	   	level = Level.get().getInt("Level.player." + player.getName());
+				   	        	levelup = level + 1;
+				   	        	flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
+				   	        	flowerpowerTotal = flowerpower + gainedFlowerpower;
+				           		needed = 2 * (level * level);
+				           		flowerpowerLevelup = flowerpowerTotal - needed;
+			        		}
+			        		while(flowerpower >= needed);
+		        		}
+		        }
+        	}
+        	if(choice < 20) {
+    			if(level > 10) {
+    				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(event.getBlock().getType()));
+    			}
+        	}
+        	if(choice < 5) {
+    			if(level > 20) {
+    				event.setDropItems(false);
+    				ItemStack item = new ItemStack(event.getBlock().getType(), 1);
+    				item.addEnchantment(Enchantment.KNOCKBACK, 1);
+    				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
+    				player.sendMessage("Du fik en speciel blomst!");
+    			}
+    		}
 		}
         return 0;
 	}
@@ -85,7 +173,6 @@ public class BlockListener implements Listener
                 Material.WITHER_ROSE
 
                ) );
-
 	    if(flowers.contains(event.getItem().getItemStack().getType())){
 	    	int pickedup = plugin.getConfig().getInt("PickedUp.player." + entity.getName());
 	    	int antal = event.getItem().getItemStack().getAmount();

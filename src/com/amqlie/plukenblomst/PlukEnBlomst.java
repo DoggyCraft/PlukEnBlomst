@@ -8,8 +8,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+//import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin; 
+import org.bukkit.plugin.java.JavaPlugin;
+
 
 public class PlukEnBlomst extends JavaPlugin{
 	
@@ -31,6 +33,9 @@ public class PlukEnBlomst extends JavaPlugin{
     public void onEnable()
     {
     	getServer().getPluginManager().registerEvents(new BlockListener(this), this);
+        saveDefaultConfig();
+        Level.setup();
+        Level.save();
     }
 	
 	@Override
@@ -39,31 +44,21 @@ public class PlukEnBlomst extends JavaPlugin{
 		//do nothing
 	}	
 	
-	public void flowerPickedUpMessage(Player player, Player target) {
-		int pickeduptarget = getConfig().getInt("PickedUp.player." + target.getName());
-		player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har samlet " + ChatColor.GOLD + pickeduptarget + ChatColor.AQUA + " blomst(er) op");
-	}
-	
-	public void flowerHarvestMessage(Player player, Player target) {
-		int harvestedtarget = getConfig().getInt("Harvested.player." + target.getName());
-		player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har plukket " + ChatColor.GOLD + harvestedtarget + ChatColor.AQUA + " blomst(er)");
-		
-	}
-	
-	
-	
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+	public 	boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
-	    
-		
-		if(cmd.getName().equalsIgnoreCase("blomst") && sender instanceof Player){
-				
+		if(cmd.getName().equalsIgnoreCase("blomst") && sender instanceof Player){	
 				Player player = (Player)sender;
 				int harvested = getConfig().getInt("Harvested.player." + player.getName());
 				int pickedup = getConfig().getInt("PickedUp.player." + player.getName());
+				int level = Level.get().getInt("Level.player." + player.getName());
+		        int flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
+		        int needed = 2 * (level * level);
+	        	int neededFlowerpower = needed - flowerpower;
+	        	int levelup = level + 1;
 				
 				if (args.length == 0) {
+					player.sendMessage(ChatColor.YELLOW  + "-------" + ChatColor.GOLD + " Blomster " + ChatColor.YELLOW  + "-------");
 					if(harvested >= 1) {
 						player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + harvested + ChatColor.AQUA +  " blomst(er)");
 				    }
@@ -72,11 +67,34 @@ public class PlukEnBlomst extends JavaPlugin{
 				    }
 					
 					if(pickedup >= 1) {
-						player.sendMessage(ChatColor.AQUA + "Du har samlet " + ChatColor.GOLD + pickedup + ChatColor.AQUA +  " blomst(er)");
+						player.sendMessage(ChatColor.AQUA + "Du har samlet " + ChatColor.GOLD + pickedup + ChatColor.AQUA +  " blomst(er) op");
 				    }
 				    else {
 				        player.sendMessage(ChatColor.AQUA + "Du har ikke samlet nogen blomster op endnu. Kom nu igang!");
 				    }
+					player.sendMessage(ChatColor.YELLOW  + "-------" + ChatColor.GOLD + " Levels " + ChatColor.YELLOW  + "-------");
+					if(flowerpower >= 1) {
+						player.sendMessage(ChatColor.AQUA + "Du har " + ChatColor.GOLD + flowerpower + ChatColor.AQUA +  " flowerpower");
+				    }
+				    else {
+				        player.sendMessage(ChatColor.AQUA + "Du har intet flowerpower!");
+				    }
+					if(level >= 1) {
+						player.sendMessage(ChatColor.AQUA + "Du er i level " + ChatColor.GOLD + level + ChatColor.AQUA);
+						player.sendMessage(ChatColor.RED + "Du mangler " + ChatColor.DARK_RED + neededFlowerpower + ChatColor.RED + " flowerpower til level " + ChatColor.DARK_RED + levelup);
+				    }
+				    else {
+				        player.sendMessage(ChatColor.AQUA + "Du er ikke i noget level!");
+				    }
+					if(level > 10) {
+						player.sendMessage(ChatColor.AQUA + "Du er i eller passeret level " + ChatColor.GOLD + "10");
+						player.sendMessage(ChatColor.AQUA + "Så du har " + ChatColor.GOLD + "20%" + ChatColor.AQUA + " chance for en extra blomst!");
+					}
+					if(level > 20) {
+						player.sendMessage(" ");
+						player.sendMessage(ChatColor.AQUA + "Du er i eller passeret level " + ChatColor.GOLD + "20");
+						player.sendMessage(ChatColor.AQUA + "Så du har " + ChatColor.GOLD + "5%" + ChatColor.AQUA + " chance for en fortryllet blomst!");
+					}
 				}
 				
 				if (args.length == 1) {
@@ -89,22 +107,30 @@ public class PlukEnBlomst extends JavaPlugin{
 						} else {
 							int harvestedtarget = getConfig().getInt("Harvested.player." + target.getName());
 							int pickeduptarget = getConfig().getInt("PickedUp.player." + target.getName());
+							int leveltarget = Level.get().getInt("Level.player." + target.getName());
+							
+							player.sendMessage(ChatColor.YELLOW  + "-------" + ChatColor.GOLD + " Blomster " + ChatColor.YELLOW  + "-------");
 							if(harvestedtarget >= 1) {
-								this.flowerHarvestMessage(player, target);  
+								player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har plukket " + ChatColor.GOLD + harvestedtarget + ChatColor.AQUA + " blomst(er)"); 
 							} else {
 								player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har ikke plukket nogen blomster");
 							}
 							if(pickeduptarget >= 1) {
-								this.flowerPickedUpMessage(player, target);  
+								player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har samlet " + ChatColor.GOLD + pickeduptarget + ChatColor.AQUA + " blomst(er) op");
 							} else {
 								player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har ikke samlet nogle blomster op");
+						    }
+							player.sendMessage(ChatColor.YELLOW  + "-------" + ChatColor.GOLD + " Levels " + ChatColor.YELLOW  + "-------");
+							if(leveltarget >= 1) {
+								player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " er i level " + ChatColor.GOLD + leveltarget + ChatColor.AQUA);
+						    }
+						    else {
+						        player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " er ikke i noget level!");
 						    }
 						}
 					}	
 				}
-			} else {
-				System.out.println("Du skal være en spiller for at skrive denne kommando.");
-			}
+			} 
 		
 		return true;
 	}
