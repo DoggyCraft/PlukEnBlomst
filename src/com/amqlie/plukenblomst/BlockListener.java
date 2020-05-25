@@ -9,7 +9,6 @@ import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -25,10 +24,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class BlockListener implements Listener 
 {	
     PlukEnBlomst plugin;
+    private SpecialFlowers specialFlowers;
+	SpecialFlowers loveFlower = new SpecialFlowers();
     
     BlockListener(PlukEnBlomst plugin)
     {
         this.plugin = plugin;
+        this.specialFlowers = new SpecialFlowers();
     }
 	
 	
@@ -111,7 +113,9 @@ public class BlockListener implements Listener
             SecureRandom secureRandomGenerator = SecureRandom.getInstance("SHA1PRNG", "SUN");
             int flowerpowerChance = secureRandomGenerator.nextInt(100);
             int doubleFlowerChance = secureRandomGenerator.nextInt(100);
-            int enchantedFlowerChance = secureRandomGenerator.nextInt(100);
+            int swordFlowerChance = secureRandomGenerator.nextInt(1000);
+            int loveFlowerChance = secureRandomGenerator.nextInt(1000);
+            int bombFlowerChance = secureRandomGenerator.nextInt(1000);
             
         	if(flowerpowerChance < 30 && flowerpower >= 0) {
 		        		player.sendMessage(ChatColor.AQUA + "Du fik " + ChatColor.GOLD + gainedFlowerpower + ChatColor.AQUA +" flowerpower");
@@ -138,7 +142,7 @@ public class BlockListener implements Listener
         	if(doubleFlowerChance < 20 && level >= 10) {
         		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(event.getBlock().getType()));
         	}
-        	if(doubleFlowerChance < 100 && level >= 5) {
+        	if(loveFlowerChance < 100 && level >= 5) {
         		event.setDropItems(false);
         		ItemStack item = new ItemStack(event.getBlock().getType(), 1);
         		ItemMeta randomItemMeta = item.getItemMeta();
@@ -147,7 +151,7 @@ public class BlockListener implements Listener
         		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
         		player.sendMessage(ChatColor.RED + "Du fik en flower of love!");
         	}
-        	if(doubleFlowerChance < 100 && level >= 5) {
+        	if(bombFlowerChance < 100 && level >= 5) {
         		event.setDropItems(false);
         		ItemStack item = new ItemStack(event.getBlock().getType(), 1);
         		ItemMeta randomItemMeta = item.getItemMeta();
@@ -156,12 +160,9 @@ public class BlockListener implements Listener
         		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
         		player.sendMessage(ChatColor.RED + "Du fik en bomb flower!");
         	}
-        	if(enchantedFlowerChance < 5 && level >= 20) {
+        	if(swordFlowerChance < 5 && level >= 20) {
         		event.setDropItems(false);
-        		ItemStack item = new ItemStack(event.getBlock().getType(), 1);
-        		item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
-        		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
-        		player.sendMessage(ChatColor.LIGHT_PURPLE + "Du fik en speciel blomst!");
+        		this.specialFlowers.swordFlower(player, event.getBlock());
         	}
 	    }
 	    

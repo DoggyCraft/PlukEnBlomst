@@ -20,6 +20,9 @@ import org.bukkit.scheduler.BukkitScheduler;
 public class PlukEnBlomst extends JavaPlugin{
 	
 	FileConfiguration config = getConfig();
+	@SuppressWarnings("unused")
+	private SpecialFlowers specialFlowers;
+	SpecialFlowers loveFlower = new SpecialFlowers();
 	int sekunder = 60;
 	
 	public  String convertToUTF8(String text)
@@ -36,6 +39,7 @@ public class PlukEnBlomst extends JavaPlugin{
     @Override
     public void onEnable()
     {
+    	this.specialFlowers = new SpecialFlowers();
     	getServer().getPluginManager().registerEvents(new BlockListener(this), this);
         saveDefaultConfig();
         Level.setup();
@@ -43,10 +47,12 @@ public class PlukEnBlomst extends JavaPlugin{
         
         BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
-            @Override
+        	private SpecialFlowers specialFlowers;
+
+			@Override
             public void run() {
             	for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-            		SpecialFlowers.loveFlower(p);
+            		this.specialFlowers.loveFlower(p);
             	}
             }
 

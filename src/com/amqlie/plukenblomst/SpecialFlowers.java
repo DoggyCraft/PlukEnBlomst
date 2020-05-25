@@ -4,14 +4,15 @@ import java.security.SecureRandom;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 
-public class SpecialFlowers extends JavaPlugin {
+public class SpecialFlowers{
 	PlukEnBlomst plugin;
-	public static void loveFlower(Player player){
+	public void loveFlower(Player player){
 		SecureRandom rand = new SecureRandom();
 		
 		String[] loveFlowerMessages = {"Du er så smuk", "Jeg elsker dig", "Du fortjener alt i verdenen", "Hvordan kan man være så pæn?", "Du er en smuksak", "Man får helt lyst til at kysse dig", "Du er smækker", "Uha hvor er du flot i dag", "Hvaa? Skal du stikkes af min torn?", "Sikke en blomst", "Du ser blomster godt ud", "Du ligner en tulipan", "Den blomst klæder dig", "Hvor er det dog en flot blomst", "Du stråler som en solsikke", "Du er som en rose"};
@@ -26,5 +27,25 @@ public class SpecialFlowers extends JavaPlugin {
             }
         }
      
+    }
+	public void swordFlower(Player player, Block block) {
+		SecureRandom rand = new SecureRandom();
+
+        Enchantment[] enchantments = new Enchantment[]{
+                Enchantment.KNOCKBACK, Enchantment.DAMAGE_ALL, Enchantment.DAMAGE_UNDEAD, Enchantment.FIRE_ASPECT, Enchantment.LOOT_BONUS_MOBS, Enchantment.DAMAGE_ARTHROPODS,
+                Enchantment.SWEEPING_EDGE
+        };
+        
+        ItemStack item = new ItemStack(block.getType(), 1);
+        int length = enchantments.length;
+
+        for (int i = 0; i < 2; i++) {
+            int index = rand.nextInt(length);
+            
+            item.addUnsafeEnchantment(enchantments[index], 1);
+        }
+        
+        block.getWorld().dropItem(block.getLocation(), new ItemStack(item));
+        player.sendMessage(ChatColor.LIGHT_PURPLE + "Du fik en Sword Flower");
     }
 }
