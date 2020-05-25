@@ -19,4 +19,4 @@ permissions:
    children: 
      plukenblomst.help: true
    default: false
-   description: Gives access to all plukenblomst commands
+   description: Gives access to all plukenblomst commands	

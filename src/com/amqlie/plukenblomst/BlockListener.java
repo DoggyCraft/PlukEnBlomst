@@ -5,18 +5,23 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class BlockListener implements Listener 
 {	
@@ -105,9 +110,11 @@ public class BlockListener implements Listener
         	
 
             SecureRandom secureRandomGenerator = SecureRandom.getInstance("SHA1PRNG", "SUN");
-            int choice = secureRandomGenerator.nextInt(100);
+            int flowerpowerChance = secureRandomGenerator.nextInt(100);
+            int doubleFlowerChance = secureRandomGenerator.nextInt(100);
+            int enchantedFlowerChance = secureRandomGenerator.nextInt(100);
             
-        	if(choice < 30 && flowerpower >= 0) {
+        	if(flowerpowerChance < 30 && flowerpower >= 0) {
 		        		player.sendMessage(ChatColor.AQUA + "Du fik " + ChatColor.GOLD + gainedFlowerpower + ChatColor.AQUA +" flowerpower");
 		        		Level.get().set("Flowerpower.player." + player.getName(), flowerpowerTotal);
 		        		Level.save();
@@ -129,15 +136,33 @@ public class BlockListener implements Listener
 			        		while(flowerpower >= needed);
 		        		}
 		        }
-        	if(choice < 20 && level >= 10) {
+        	if(doubleFlowerChance < 20 && level >= 10) {
         		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(event.getBlock().getType()));
         	}
-        	if(choice < 5 && level >= 20) {
+        	if(doubleFlowerChance < 100 && level >= 5) {
         		event.setDropItems(false);
         		ItemStack item = new ItemStack(event.getBlock().getType(), 1);
-        		item.addEnchantment(Enchantment.KNOCKBACK, 1);
+        		ItemMeta randomItemMeta = item.getItemMeta();
+                randomItemMeta.setDisplayName(ChatColor.RED + "Flower of love");
+                item.setItemMeta(randomItemMeta);
         		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
-        		player.sendMessage("Du fik en speciel blomst!");
+        		player.sendMessage(ChatColor.RED + "Du fik en flower of love!");
+        	}
+        	if(doubleFlowerChance < 100 && level >= 5) {
+        		event.setDropItems(false);
+        		ItemStack item = new ItemStack(event.getBlock().getType(), 1);
+        		ItemMeta randomItemMeta = item.getItemMeta();
+                randomItemMeta.setDisplayName(ChatColor.RED + "Bomb Flower");
+                item.setItemMeta(randomItemMeta);
+        		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
+        		player.sendMessage(ChatColor.RED + "Du fik en bomb flower!");
+        	}
+        	if(enchantedFlowerChance < 5 && level >= 20) {
+        		event.setDropItems(false);
+        		ItemStack item = new ItemStack(event.getBlock().getType(), 1);
+        		item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+        		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
+        		player.sendMessage(ChatColor.LIGHT_PURPLE + "Du fik en speciel blomst!");
         	}
 	    }
 	    
@@ -179,5 +204,22 @@ public class BlockListener implements Listener
 	    	
 		}
 		return 0;
-	}	
+	}
+	@EventHandler
+	public void onThrow(PlayerDropItemEvent event) {
+		Player player = event.getPlayer();
+		Item t = event.getItemDrop();
+		
+		Random rand = new Random();
+		int bombRadius = rand.nextInt(5);
+        new BukkitRunnable(){
+        	public void run(){
+        		if(t.getItemStack().getItemMeta().getDisplayName().contains("Bomb Flower")){
+        			t.getWorld().createExplosion(t.getLocation(), (bombRadius + 1) * 1F);
+        			event.getItemDrop().remove();
+	        	    player.sendMessage(ChatColor.DARK_RED + "Sikke en eksplosion!");
+                }
+            }
+        }.runTaskLater(plugin, 20);
+	}
 }

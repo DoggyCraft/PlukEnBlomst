@@ -14,12 +14,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 
 public class PlukEnBlomst extends JavaPlugin{
 	
 	FileConfiguration config = getConfig();
-	
+	int sekunder = 60;
 	
 	public  String convertToUTF8(String text)
 	{
@@ -39,6 +40,17 @@ public class PlukEnBlomst extends JavaPlugin{
         saveDefaultConfig();
         Level.setup();
         Level.save();
+        
+        BukkitScheduler scheduler = getServer().getScheduler();
+        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+            	for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+            		SpecialFlowers.loveFlower(p);
+            	}
+            }
+
+	    }, 20L * sekunder, 20 * sekunder);
     }
 	
 	@Override
@@ -88,19 +100,20 @@ public class PlukEnBlomst extends JavaPlugin{
 				        player.sendMessage(ChatColor.AQUA + "Du er ikke i noget level!");
 				    }
 					if(level >= 10) {
-						player.sendMessage(ChatColor.AQUA + "Du er i eller passeret level " + ChatColor.GOLD + "10");
+						player.sendMessage(ChatColor.AQUA + "Du har passeret eller er i level " + ChatColor.GOLD + "10");
 						player.sendMessage(ChatColor.AQUA + "Så du har " + ChatColor.GOLD + "20%" + ChatColor.AQUA + " chance for en extra blomst!");
 					}
 					if(level >= 20) {
 						player.sendMessage(" ");
-						player.sendMessage(ChatColor.AQUA + "Du er i eller passeret level " + ChatColor.GOLD + "20");
+						player.sendMessage(ChatColor.AQUA + "Du har passeret eller er i level " + ChatColor.GOLD + "20");
 						player.sendMessage(ChatColor.AQUA + "Så du har " + ChatColor.GOLD + "5%" + ChatColor.AQUA + " chance for en fortryllet blomst!");
 					}
 				}
 				
 				if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
-						player.sendMessage(ChatColor.RED + "Du skal skrive " + ChatColor.GOLD + "/blomst" + ChatColor.RED + " eller " + ChatColor.GOLD + "/blomst (spiller)");
-					} else if (args[0].equalsIgnoreCase("reload")) {
+						player.sendMessage(ChatColor.RED + "Du skal skrive " + ChatColor.GOLD + "/blomst" + ChatColor.RED + " eller " + ChatColor.GOLD + "/blomst info (spiller)");
+				}
+				if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
 						if(player.hasPermission("PlukEnBlomst.staff")) {
 							Level.reload();
 							Level.save();
@@ -111,7 +124,7 @@ public class PlukEnBlomst extends JavaPlugin{
 							player.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[FEJL]" + ChatColor.RED + " Dette har du vidst ikke adgang til.");
 						}
 					}
-				if (args.length == 2 && args[1].equalsIgnoreCase("info")) {
+				if (args.length == 2 && args[0].equalsIgnoreCase("info")) {
 							Player target = sender.getServer().getPlayer(args[1]);
 							if(target == null) {
 								player.sendMessage(ChatColor.RED + "Denne spiller findes ikke");
@@ -138,11 +151,10 @@ public class PlukEnBlomst extends JavaPlugin{
 							    else {
 							        player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " er ikke i noget level!");
 							    }
-						    }
-						}
-					}	
-				 
-		
+							}
+				}
+		}
+			
 		return true;
 	}
 	@Override
@@ -152,10 +164,10 @@ public class PlukEnBlomst extends JavaPlugin{
 			arguments.add("info");
 			arguments.add("reload");
 			arguments.add("help");
- 
 			return arguments;
+		}
 			
-		}else if (args.length == 2 && args[1].equalsIgnoreCase("info")) {
+		if (args.length == 2 && args[0].equalsIgnoreCase("info")) {
 				List<String> playerNames = new ArrayList<>();
 				Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
 				Bukkit.getServer().getOnlinePlayers().toArray(players);

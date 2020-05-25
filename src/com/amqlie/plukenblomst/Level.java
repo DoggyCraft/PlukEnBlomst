@@ -23,10 +23,10 @@ public class Level {
         	try{
             	file.createNewFile();
             	  if (!file.createNewFile()) {
-            		  System.out.println("Couldn't create file");
+            		  System.out.println("Kunne ikke lave filen");
             		  }
             }catch (IOException e){
-            	System.out.println("Couldn't create file");
+            	System.out.println("Kunne ikke lave filen");
             }
         }
         level = YamlConfiguration.loadConfiguration(file);
@@ -40,7 +40,7 @@ public class Level {
         try{
             level.save(file);
         }catch (IOException e){
-            System.out.println("Couldn't save file");
+            System.out.println("Kunne ikke gemme fil");
         }
     }
  
