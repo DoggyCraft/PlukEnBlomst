@@ -5,7 +5,6 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -210,7 +209,7 @@ public class BlockListener implements Listener
 		Player player = event.getPlayer();
 		Item t = event.getItemDrop();
 		
-		Random rand = new Random();
+		SecureRandom rand = new SecureRandom();
 		int bombRadius = rand.nextInt(5);
         new BukkitRunnable(){
         	public void run(){

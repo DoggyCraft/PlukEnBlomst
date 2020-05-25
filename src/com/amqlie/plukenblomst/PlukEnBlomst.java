@@ -50,7 +50,7 @@ public class PlukEnBlomst extends JavaPlugin{
             	}
             }
 
-	    }, 20L * sekunder, 20 * sekunder);
+	    }, 20L * sekunder, 20L * sekunder);
     }
 	
 	@Override
