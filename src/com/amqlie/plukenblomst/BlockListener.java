@@ -27,8 +27,8 @@ public class BlockListener implements Listener
     private SpecialFlowers specialFlowers;
 	SpecialFlowers loveFlower = new SpecialFlowers();
 	
-	private static final String LevelPath = "Level.player.";
-	private static final String FlowerpowerPath = "Flowerpower.player.";
+	static String LEVELPATH = "Level.player.";
+	static String FLOWERPOWERPATH = "Flowerpower.player.";
     
     BlockListener(PlukEnBlomst plugin)
     {
@@ -105,9 +105,9 @@ public class BlockListener implements Listener
 				break;
 	    	}
 	    	
-	        int level = Level.get().getInt(LevelPath + player.getName());
+	        int level = Level.get().getInt(LEVELPATH + player.getName());
 	        int levelup = level + 1;
-	        int flowerpower = Level.get().getInt(FlowerpowerPath + player.getName());
+	        int flowerpower = Level.get().getInt(FLOWERPOWERPATH + player.getName());
 	        int flowerpowerTotal = flowerpower + gainedFlowerpower;
         	int needed = 2 * (level * level);
         	int flowerpowerLevelup = flowerpowerTotal - needed;
@@ -122,19 +122,19 @@ public class BlockListener implements Listener
             
             if(flowerpowerChance < 300 && flowerpower >= 0) {
             	player.sendMessage(ChatColor.AQUA + "Du fik " + ChatColor.GOLD + gainedFlowerpower + ChatColor.AQUA +" flowerpower");
-        		Level.get().set(FlowerpowerPath + player.getName(), flowerpowerTotal);
+        		Level.get().set(FLOWERPOWERPATH + player.getName(), flowerpowerTotal);
         		Level.save();
         		flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
         		needed = 2 * (level * level);
         		if(flowerpower >= needed) {
         			do {
         				player.sendMessage(ChatColor.AQUA + "Og du kom op i level " + ChatColor.GOLD + levelup + ChatColor.AQUA +"!");
-        				Level.get().set(LevelPath + player.getName(), levelup);
-        				Level.get().set(FlowerpowerPath + player.getName(), flowerpowerLevelup);
+        				Level.get().set(LEVELPATH + player.getName(), levelup);
+        				Level.get().set(FLOWERPOWERPATH + player.getName(), flowerpowerLevelup);
         				Level.save();
-        				level = Level.get().getInt(LevelPath + player.getName());
+        				level = Level.get().getInt(LEVELPATH + player.getName());
         				levelup = level + 1;
-        				flowerpower = Level.get().getInt(FlowerpowerPath + player.getName());
+        				flowerpower = Level.get().getInt(FLOWERPOWERPATH + player.getName());
         				flowerpowerTotal = flowerpower + gainedFlowerpower;
         				needed = 2 * (level * level);
         				flowerpowerLevelup = flowerpowerTotal - needed;
