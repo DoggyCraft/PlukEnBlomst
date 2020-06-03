@@ -9,15 +9,18 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.MemorySection;
 
 public class LevelTop {
+
+	private static final String LevelPath = "Level.player.";
+
 	public String sortLevels(int a) {
 		// temp storage map
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		List<String> finalScore = new ArrayList<String>();
+		Map<String, Integer> map = new HashMap<>();
+		List<String> finalScore = new ArrayList<>();
 
 		// add players and score to map
-		for (String playerName : ((MemorySection) Level.get().get("Level.player.")).getKeys(false)){
+		for (String playerName : ((MemorySection) Level.get().get(LevelPath)).getKeys(false)) {
 
-			int level = Level.get().getInt("Level.player." + playerName);
+			int level = Level.get().getInt(LevelPath + playerName);
 
 			map.put(playerName, level);
 
@@ -44,18 +47,21 @@ public class LevelTop {
 
 				map.remove(topName);
 
-				int level = Level.get().getInt("Level.player." + topName);
+				int level = Level.get().getInt(LevelPath + topName);
 				int position = i + 1;
 
-				String finalString = ChatColor.GRAY + "[" + position + "] " + ChatColor.WHITE + ChatColor.BOLD + topName + ChatColor.GREEN + " " + level;
-
+				// String finalString = ChatColor.GRAY + "[" + position + "] " + ChatColor.WHITE
+				// + ChatColor.BOLD + topName + ChatColor.GREEN + " " + level;
+				String finalString = "" + ChatColor.WHITE + position + " - " + topName + "  " + ChatColor.GOLD + level
+						+ ChatColor.WHITE + " level";
 				finalScore.add(finalString);
 
-			} else
+			} else {
 				break;
+			}
 
 		}
-		
+
 		return finalScore.get(a);
 	}
 }

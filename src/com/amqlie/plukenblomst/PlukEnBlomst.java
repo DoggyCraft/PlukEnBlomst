@@ -30,6 +30,9 @@ public class PlukEnBlomst extends JavaPlugin{
 	int sekunder = 60;
 	static ConsoleCommandSender console = Bukkit.getConsoleSender();
 	
+	
+	private static final String linjer = "-------";
+	
 	public  String convertToUTF8(String text)
 	{
 		
@@ -82,7 +85,7 @@ public class PlukEnBlomst extends JavaPlugin{
 	        	int levelup = level + 1;
 				
 				if (args.length == 0) {
-					player.sendMessage(ChatColor.YELLOW  + "-------" + ChatColor.GOLD + " Blomster " + ChatColor.YELLOW  + "-------");
+					player.sendMessage(ChatColor.YELLOW  + linjer + ChatColor.GOLD + " Blomster " + ChatColor.YELLOW  + linjer);
 					if(harvested >= 1) {
 						player.sendMessage(ChatColor.AQUA + "Du har plukket " + ChatColor.GOLD + harvested + ChatColor.AQUA +  " blomst(er)");
 				    }
@@ -96,7 +99,7 @@ public class PlukEnBlomst extends JavaPlugin{
 				    else {
 				        player.sendMessage(ChatColor.AQUA + "Du har ikke samlet nogen blomster op endnu. Kom nu igang!");
 				    }
-					player.sendMessage(ChatColor.YELLOW  + "-------" + ChatColor.GOLD + " Levels " + ChatColor.YELLOW  + "-------");
+					player.sendMessage(ChatColor.YELLOW  + linjer + ChatColor.GOLD + " Levels " + ChatColor.YELLOW  + linjer);
 					if(flowerpower >= 1) {
 						player.sendMessage(ChatColor.AQUA + "Du har " + ChatColor.GOLD + flowerpower + ChatColor.AQUA +  " flowerpower");
 				    }else {
@@ -126,7 +129,7 @@ public class PlukEnBlomst extends JavaPlugin{
 				if (args.length == 1 && args[0].equalsIgnoreCase("top")) {
 					this.levelTop = new LevelTop();
 					for(int i = 0; i<5; i++) {
-						player.sendMessage(""+levelTop.sortLevels(i));
+						player.sendMessage(levelTop.sortLevels(i));
 					}
 				}
 				if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
@@ -149,7 +152,7 @@ public class PlukEnBlomst extends JavaPlugin{
 								int pickeduptarget = getConfig().getInt("PickedUp.player." + target.getName());
 								int leveltarget = Level.get().getInt("Level.player." + target.getName());
 								
-								player.sendMessage(ChatColor.YELLOW  + "-------" + ChatColor.GOLD + " Blomster " + ChatColor.YELLOW  + "-------");
+								player.sendMessage(ChatColor.YELLOW  + linjer + ChatColor.GOLD + " Blomster " + ChatColor.YELLOW  + linjer);
 								if(harvestedtarget >= 1) {
 									player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har plukket " + ChatColor.GOLD + harvestedtarget + ChatColor.AQUA + " blomst(er)"); 
 								} else {
@@ -160,7 +163,7 @@ public class PlukEnBlomst extends JavaPlugin{
 								} else {
 									player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " har ikke samlet nogle blomster op");
 							    }
-								player.sendMessage(ChatColor.YELLOW  + "-------" + ChatColor.GOLD + " Levels " + ChatColor.YELLOW  + "-------");
+								player.sendMessage(ChatColor.YELLOW  + linjer + ChatColor.GOLD + " Levels " + ChatColor.YELLOW  + linjer);
 								if(leveltarget >= 1) {
 									player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " er i level " + ChatColor.GOLD + leveltarget + ChatColor.AQUA);
 							    }
