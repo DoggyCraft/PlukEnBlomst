@@ -111,38 +111,38 @@ public class BlockListener implements Listener
         	
 
             SecureRandom secureRandomGenerator = SecureRandom.getInstance("SHA1PRNG", "SUN");
-            int flowerpowerChance = secureRandomGenerator.nextInt(100);
-            int doubleFlowerChance = secureRandomGenerator.nextInt(100);
+            int flowerpowerChance = secureRandomGenerator.nextInt(1000);
+            int doubleFlowerChance = secureRandomGenerator.nextInt(1000);
             int swordFlowerChance = secureRandomGenerator.nextInt(1000);
             int loveFlowerChance = secureRandomGenerator.nextInt(1000);
             int bombFlowerChance = secureRandomGenerator.nextInt(1000);
             
-        	if(flowerpowerChance < 30 && flowerpower >= 0) {
-		        		player.sendMessage(ChatColor.AQUA + "Du fik " + ChatColor.GOLD + gainedFlowerpower + ChatColor.AQUA +" flowerpower");
-		        		Level.get().set("Flowerpower.player." + player.getName(), flowerpowerTotal);
-		        		Level.save();
-		        		flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
-		        		needed = 2 * (level * level);
-		        		if(flowerpower >= needed) {
-			        		do {
-				        		player.sendMessage(ChatColor.AQUA + "Og du kom op i level " + ChatColor.GOLD + levelup + ChatColor.AQUA +"!");
-				        		Level.get().set("Level.player." + player.getName(), levelup);
-				        		Level.get().set("Flowerpower.player." + player.getName(), flowerpowerLevelup);
-				    	 	    Level.save();
-				    	 	   	level = Level.get().getInt("Level.player." + player.getName());
-				   	        	levelup = level + 1;
-				   	        	flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
-				   	        	flowerpowerTotal = flowerpower + gainedFlowerpower;
-				           		needed = 2 * (level * level);
-				           		flowerpowerLevelup = flowerpowerTotal - needed;
-			        		}
-			        		while(flowerpower >= needed);
-		        		}
-		        }
-        	if(doubleFlowerChance < 20 && level >= 10) {
+            if(flowerpowerChance < 300 && flowerpower >= 0) {
+            	player.sendMessage(ChatColor.AQUA + "Du fik " + ChatColor.GOLD + gainedFlowerpower + ChatColor.AQUA +" flowerpower");
+        		Level.get().set("Flowerpower.player." + player.getName(), flowerpowerTotal);
+        		Level.save();
+        		flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
+        		needed = 2 * (level * level);
+        		if(flowerpower >= needed) {
+        			do {
+        				player.sendMessage(ChatColor.AQUA + "Og du kom op i level " + ChatColor.GOLD + levelup + ChatColor.AQUA +"!");
+        				Level.get().set("Level.player." + player.getName(), levelup);
+        				Level.get().set("Flowerpower.player." + player.getName(), flowerpowerLevelup);
+        				Level.save();
+        				level = Level.get().getInt("Level.player." + player.getName());
+        				levelup = level + 1;
+        				flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
+        				flowerpowerTotal = flowerpower + gainedFlowerpower;
+        				needed = 2 * (level * level);
+        				flowerpowerLevelup = flowerpowerTotal - needed;
+        			}
+        			while(flowerpower >= needed);
+        		}
+        	}
+        	if(doubleFlowerChance < 200 && level >= 10) {
         		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(event.getBlock().getType()));
         	}
-        	if(loveFlowerChance < 100 && level >= 5) {
+        	if(loveFlowerChance < 10 && level >= 15) {
         		event.setDropItems(false);
         		ItemStack item = new ItemStack(event.getBlock().getType(), 1);
         		ItemMeta randomItemMeta = item.getItemMeta();
@@ -151,7 +151,7 @@ public class BlockListener implements Listener
         		event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(item));
         		player.sendMessage(ChatColor.RED + "Du fik en flower of love!");
         	}
-        	if(bombFlowerChance < 100 && level >= 5) {
+        	if(bombFlowerChance < 5 && level >= 20) {
         		event.setDropItems(false);
         		ItemStack item = new ItemStack(event.getBlock().getType(), 1);
         		ItemMeta randomItemMeta = item.getItemMeta();

@@ -15,7 +15,7 @@ public class SpecialFlowers{
 	public void loveFlower(Player player){
 		SecureRandom rand = new SecureRandom();
 		
-		String[] loveFlowerMessages = {"Du er så smuk", "Jeg elsker dig", "Du fortjener alt i verdenen", "Hvordan kan man være så pæn?", "Du er en smuksak", "Man får helt lyst til at kysse dig", "Du er smækker", "Uha hvor er du flot i dag", "Hvaa? Skal du stikkes af min torn?", "Sikke en blomst", "Du ser blomster godt ud", "Du ligner en tulipan", "Den blomst klæder dig", "Hvor er det dog en flot blomst", "Du stråler som en solsikke", "Du er som en rose"};
+		String[] loveFlowerMessages = {"Du er så smuk", "Jeg elsker dig", "Du fortjener alt i verden", "Hvordan kan man være så pæn?", "Du er en smuksak", "Man får helt lyst til at kysse dig", "Du er smækker", "Uha hvor er du flot i dag", "Hvaa? Skal du stikkes af min torn?", "Sikke en blomst", "Du ser blomster godt ud", "Du ligner en tulipan", "Den blomst klæder dig", "Hvor er det dog en flot blomst", "Du stråler som en solsikke", "Du er som en rose"};
 	    int loveFlowerNumber = rand.nextInt(loveFlowerMessages.length);
         for(ItemStack item : player.getInventory().getContents()){
             if (item != null && item.getItemMeta().getDisplayName().contains("Flower of love")){

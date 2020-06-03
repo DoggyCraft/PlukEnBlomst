@@ -1,6 +1,5 @@
 package com.amqlie.plukenblomst;
 
-
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,10 +20,15 @@ import org.bukkit.scheduler.BukkitScheduler;
 public class PlukEnBlomst extends JavaPlugin{
 	
 	FileConfiguration config = getConfig();
-	@SuppressWarnings("unused")
+	
 	private SpecialFlowers specialFlowers;
 	SpecialFlowers loveFlower = new SpecialFlowers();
+	
+	private LevelTop levelTop;
+	LevelTop getTop15 = new LevelTop();
+	
 	int sekunder = 60;
+	static ConsoleCommandSender console = Bukkit.getConsoleSender();
 	
 	public  String convertToUTF8(String text)
 	{
@@ -41,18 +46,17 @@ public class PlukEnBlomst extends JavaPlugin{
     {
     	this.specialFlowers = new SpecialFlowers();
     	getServer().getPluginManager().registerEvents(new BlockListener(this), this);
-        saveDefaultConfig();
+    	saveDefaultConfig();
         Level.setup();
         Level.save();
         
         BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
-        	private SpecialFlowers specialFlowers;
 
 			@Override
             public void run() {
             	for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-            		this.specialFlowers.loveFlower(p);
+            		specialFlowers.loveFlower(p);
             	}
             }
 
@@ -119,6 +123,12 @@ public class PlukEnBlomst extends JavaPlugin{
 				if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
 						player.sendMessage(ChatColor.RED + "Du skal skrive " + ChatColor.GOLD + "/blomst" + ChatColor.RED + " eller " + ChatColor.GOLD + "/blomst info (spiller)");
 				}
+				if (args.length == 1 && args[0].equalsIgnoreCase("top")) {
+					this.levelTop = new LevelTop();
+					for(int i = 0; i<5; i++) {
+						player.sendMessage(""+levelTop.sortLevels(i));
+					}
+				}
 				if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
 						if(player.hasPermission("PlukEnBlomst.staff")) {
 							Level.reload();
@@ -159,6 +169,8 @@ public class PlukEnBlomst extends JavaPlugin{
 							    }
 							}
 				}
+		}else if(!(sender instanceof Player)) {
+			console.sendMessage(ChatColor.DARK_RED + "Kun spillere kan skrive denne kommando!");
 		}
 			
 		return true;
@@ -185,5 +197,4 @@ public class PlukEnBlomst extends JavaPlugin{
 			}
 		return Collections.emptyList();
     }
-
 }
