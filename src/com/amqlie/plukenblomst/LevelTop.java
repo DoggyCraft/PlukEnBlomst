@@ -1,20 +1,18 @@
 package com.amqlie.plukenblomst;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.MemorySection;
 
 public class LevelTop {
-	public String sortLevels(int i) {
+	public String sortLevels(int a) {
 		// temp storage map
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		List<String> test = new ArrayList<String>();
+		List<String> finalScore = new ArrayList<String>();
 
 		// add players and score to map
 		for (String playerName : ((MemorySection) Level.get().get("Level.player.")).getKeys(false)){
@@ -24,39 +22,40 @@ public class LevelTop {
 			map.put(playerName, level);
 
 		}
-		int pos = 1;
-		for (String playerName : map.keySet()) {
-			
-			int level = map.get(playerName);
-			
-			String test1 = ChatColor.GRAY + "[" + pos + "] " + ChatColor.WHITE + ChatColor.BOLD + playerName + ChatColor.GREEN + " " + level;
-			test.add(test1);
-			pos++;
-		}
+		for (int i = 0; i < 15; i++) {
 
-		// sort map and return it
-		ValueComparator bvc = new ValueComparator(map);
-		TreeMap<String, Integer> finalmap = new TreeMap<String, Integer>(bvc);
-		finalmap.putAll(map);
-		return test.get(i);
-	}
+			String topName = "";
+			int topScore = 0;
 
-	class ValueComparator implements Comparator<Object> {
+			for (String playerName : map.keySet()) {
 
-		Map<String, Integer> base;
+				int score = map.get(playerName);
 
-		public ValueComparator(Map<String, Integer> base) {
-			this.base = base;
-		}
+				if (score > topScore) {
 
-		public int compare(Object a, Object b) {
-			if ((Integer) base.get(a) < (Integer) base.get(b)) {
-				return 1;
-			} else if ((Integer) base.get(a) == (Integer) base.get(b)) {
-				return 0;
-			} else {
-				return -1;
+					topName = playerName;
+					topScore = score;
+
+				}
+
 			}
+
+			if (!topName.equals("")) {
+
+				map.remove(topName);
+
+				int level = Level.get().getInt("Level.player." + topName);
+				int position = i + 1;
+
+				String finalString = ChatColor.GRAY + "[" + position + "] " + ChatColor.WHITE + ChatColor.BOLD + topName + ChatColor.GREEN + " " + level;
+
+				finalScore.add(finalString);
+
+			} else
+				break;
+
 		}
+		
+		return finalScore.get(a);
 	}
 }
