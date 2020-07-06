@@ -10,7 +10,7 @@ import org.bukkit.configuration.MemorySection;
 
 public class LevelTop {
 
-	private static final String levelPath = "Level.player.";
+	private static final String LEVELPATH = "Level.player.";
 
 	public String sortLevels(int a) {
 		// temp storage map
@@ -18,9 +18,9 @@ public class LevelTop {
 		List<String> finalScore = new ArrayList<>();
 
 		// add players and score to map
-		for (String playerName : ((MemorySection) Level.get().get(levelPath)).getKeys(false)) {
+		for (String playerName : ((MemorySection) Level.get().get(LEVELPATH)).getKeys(false)) {
 
-			int level = Level.get().getInt(levelPath + playerName);
+			int level = Level.get().getInt(LEVELPATH + playerName);
 
 			map.put(playerName, level);
 
@@ -47,11 +47,8 @@ public class LevelTop {
 
 				map.remove(topName);
 
-				int level = Level.get().getInt(levelPath + topName);
+				int level = Level.get().getInt(LEVELPATH + topName);
 				int position = i + 1;
-
-				// String finalString = ChatColor.GRAY + "[" + position + "] " + ChatColor.WHITE
-				// + ChatColor.BOLD + topName + ChatColor.GREEN + " " + level;
 				String finalString = "" + ChatColor.WHITE + position + " - " + topName + "  " + ChatColor.GOLD + level
 						+ ChatColor.WHITE + " level";
 				finalScore.add(finalString);

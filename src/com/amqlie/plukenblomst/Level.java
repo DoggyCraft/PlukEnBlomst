@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Level {
 	static ConsoleCommandSender console = Bukkit.getConsoleSender();
 	private static File file;
-    private static FileConfiguration level;
+    private static FileConfiguration fileconfig;
  
     private Level() {
     	throw new IllegalStateException("Level class");
@@ -21,29 +21,27 @@ public class Level {
  
         if (!file.exists()){
         	try{
-        		if (!file.createNewFile()) {
-        			file.createNewFile();
-        		}
+        		file.createNewFile();
         	}catch (IOException e){
             	console.sendMessage("Kunne ikke lave filen");
             }
         }
-        level = YamlConfiguration.loadConfiguration(file);
+        fileconfig = YamlConfiguration.loadConfiguration(file);
     }
  
     public static FileConfiguration get(){
-        return level;
+        return fileconfig;
     }
  
     public static void save(){
         try{
-            level.save(file);
+        	fileconfig.save(file);
         }catch (IOException e){
         	console.sendMessage("Kunne ikke gemme fil");
         }
     }
  
     public static void reload(){
-        level = YamlConfiguration.loadConfiguration(file);
+    	fileconfig = YamlConfiguration.loadConfiguration(file);
     }
 }

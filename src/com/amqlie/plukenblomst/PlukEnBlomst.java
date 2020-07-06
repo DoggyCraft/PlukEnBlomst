@@ -78,8 +78,8 @@ public class PlukEnBlomst extends JavaPlugin{
 				Player player = (Player)sender;
 				int harvested = getConfig().getInt("Harvested.player." + player.getName());
 				int pickedup = getConfig().getInt("PickedUp.player." + player.getName());
-				int level = Level.get().getInt(BlockListener.LEVELPATH + player.getName());
-		        int flowerpower = Level.get().getInt(BlockListener.FLOWERPOWERPATH + player.getName());
+				int level = Level.get().getInt(BlockListener.levelPath + player.getName());
+		        int flowerpower = Level.get().getInt(BlockListener.flowerPowerPath + player.getName());
 		        int needed = 2 * (level * level);
 	        	int neededFlowerpower = needed - flowerpower;
 	        	int levelup = level + 1;
@@ -150,7 +150,7 @@ public class PlukEnBlomst extends JavaPlugin{
 							} else {
 								int harvestedtarget = getConfig().getInt("Harvested.player." + target.getName());
 								int pickeduptarget = getConfig().getInt("PickedUp.player." + target.getName());
-								int leveltarget = Level.get().getInt(BlockListener.LEVELPATH + target.getName());
+								int leveltarget = Level.get().getInt(BlockListener.levelPath + target.getName());
 								
 								player.sendMessage(ChatColor.YELLOW  + LINJER + ChatColor.GOLD + " Blomster " + ChatColor.YELLOW  + LINJER);
 								if(harvestedtarget >= 1) {
@@ -185,6 +185,7 @@ public class PlukEnBlomst extends JavaPlugin{
 			arguments.add("info");
 			arguments.add("reload");
 			arguments.add("help");
+			arguments.add("top");
 			return arguments;
 		}
 			
