@@ -216,12 +216,12 @@ public class BlockListener implements Listener
 		Item t = event.getItemDrop();
 		
 		SecureRandom rand = new SecureRandom();
-		int bombRadius = rand.nextInt(5);
+		int bombRadius = rand.nextInt(2);
         new BukkitRunnable(){
         	@SuppressWarnings("deprecation")
 			public void run(){
         		if(t.getItemStack().getItemMeta().getDisplayName().contains(ChatColor.RED + "Bomb Flower")){
-        			t.getWorld().createExplosion(t.getLocation(), (bombRadius + 1) * 1F);
+        			t.getWorld().createExplosion(t.getLocation(), (bombRadius + 2) * 1F);
         			event.getItemDrop().remove();
 	        	    player.sendMessage(ChatColor.DARK_RED + "Sikke en eksplosion!");
                 }
