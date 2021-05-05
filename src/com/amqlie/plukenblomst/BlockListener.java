@@ -38,6 +38,7 @@ public class BlockListener implements Listener
     }
 	
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public int onBlockBreak(BlockBreakEvent event) throws NoSuchAlgorithmException, NoSuchProviderException
 	{
@@ -217,8 +218,9 @@ public class BlockListener implements Listener
 		SecureRandom rand = new SecureRandom();
 		int bombRadius = rand.nextInt(5);
         new BukkitRunnable(){
-        	public void run(){
-        		if(t.getItemStack().getItemMeta().getDisplayName().contains("Bomb Flower")){
+        	@SuppressWarnings("deprecation")
+			public void run(){
+        		if(t.getItemStack().getItemMeta().getDisplayName().contains(ChatColor.RED + "Bomb Flower")){
         			t.getWorld().createExplosion(t.getLocation(), (bombRadius + 1) * 1F);
         			event.getItemDrop().remove();
 	        	    player.sendMessage(ChatColor.DARK_RED + "Sikke en eksplosion!");

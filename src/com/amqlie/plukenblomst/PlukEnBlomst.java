@@ -143,7 +143,8 @@ public class PlukEnBlomst extends JavaPlugin{
 							player.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[FEJL]" + ChatColor.RED + " Dette har du vidst ikke adgang til.");
 						}
 					}
-				if (args.length == 2 && args[0].equalsIgnoreCase("info")) {
+				if (args[0].equalsIgnoreCase("info")) {
+					if (args.length == 2) {
 							Player target = sender.getServer().getPlayer(args[1]);
 							if(target == null) {
 								player.sendMessage(ChatColor.RED + "Denne spiller findes ikke");
@@ -170,6 +171,9 @@ public class PlukEnBlomst extends JavaPlugin{
 							    else {
 							        player.sendMessage(ChatColor.GOLD +  target.getName() + ChatColor.AQUA + " er ikke i noget level!");
 							    }
+							}
+							} else {
+								player.sendMessage(ChatColor.AQUA + "Du skal skrive et navn");
 							}
 				}
 		}else if(!(sender instanceof Player)) {
