@@ -108,12 +108,7 @@ public class BlockListener implements Listener
 	    	}
 	    	
 	        int level = Level.get().getInt(levelPath + player.getName());
-	        int levelup = level + 1;
 	        int flowerpower = Level.get().getInt(flowerPowerPath + player.getName());
-	        int flowerpowerTotal = flowerpower + gainedFlowerpower;
-        	int needed = 2 * (level * level);
-        	int flowerpowerLevelup = flowerpowerTotal - needed;
-        	
 
             SecureRandom secureRandomGenerator = SecureRandom.getInstance("SHA1PRNG", "SUN");
             int flowerpowerChance = secureRandomGenerator.nextInt(1000);
@@ -124,22 +119,24 @@ public class BlockListener implements Listener
             
             if(flowerpowerChance < 300 && flowerpower >= 0) {
             	player.sendMessage(ChatColor.AQUA + "Du fik " + ChatColor.GOLD + gainedFlowerpower + ChatColor.AQUA +" flowerpower");
-        		Level.get().set(flowerPowerPath + player.getName(), flowerpowerTotal);
+            	int flowerpowerTotal = flowerpower + gainedFlowerpower;
+            	Level.get().set(flowerPowerPath + player.getName(), flowerpowerTotal);
         		Level.save();
         		flowerpower = Level.get().getInt("Flowerpower.player." + player.getName());
-        		needed = 2 * (level * level);
-        		if(flowerpower >= needed) {
+        		flowerpowerTotal = flowerpower + gainedFlowerpower;
+        		int needed = 2 * (level * level);
+        		int flowerpowerLevelup = flowerpowerTotal - needed;
+        		if(level == 0) { needed = 0; }
+        		if(flowerpower >= needed) { 
         			do {
-        				player.sendMessage(ChatColor.AQUA + "Og du kom op i level " + ChatColor.GOLD + levelup + ChatColor.AQUA +"!");
-        				Level.get().set(levelPath + player.getName(), levelup);
+        				player.sendMessage(ChatColor.AQUA + "Og du kom op i level " + ChatColor.GOLD + (level + 1) + ChatColor.AQUA +"!");
+        				Level.get().set(levelPath + player.getName(), (level + 1));
         				Level.get().set(flowerPowerPath + player.getName(), flowerpowerLevelup);
         				Level.save();
         				level = Level.get().getInt(levelPath + player.getName());
-        				levelup = level + 1;
-        				flowerpower = Level.get().getInt(flowerPowerPath + player.getName());
-        				flowerpowerTotal = flowerpower + gainedFlowerpower;
         				needed = 2 * (level * level);
-        				flowerpowerLevelup = flowerpowerTotal - needed;
+        				flowerpower = Level.get().getInt(flowerPowerPath + player.getName());
+        				flowerpowerLevelup = flowerpower - needed;
         			}
         			while(flowerpower >= needed);
         		}

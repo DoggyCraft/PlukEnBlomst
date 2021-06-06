@@ -113,6 +113,7 @@ public class PlukEnBlomst extends JavaPlugin{
 				        player.sendMessage(ChatColor.AQUA + "Du er ikke i noget level!");
 				    }
 					if(level >= 10) {
+						player.sendMessage(" ");
 						player.sendMessage(ChatColor.AQUA + "Du har passeret eller er i level " + ChatColor.GOLD + "10");
 						player.sendMessage(ChatColor.AQUA + "Så du har " + ChatColor.GOLD + "20%" + ChatColor.AQUA + " chance for en extra blomst!");
 					}
