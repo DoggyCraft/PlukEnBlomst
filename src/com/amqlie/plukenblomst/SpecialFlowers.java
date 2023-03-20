@@ -20,9 +20,9 @@ public class SpecialFlowers {
 				"Du er smækker", "Uha hvor er du flot i dag", "Hvaa? Skal du stikkes af min torn?", "Sikke en blomst",
 				"Du ser blomster godt ud", "Du ligner en tulipan", "Den blomst klæder dig",
 				"Hvor er det dog en flot blomst", "Du stråler som en solsikke", "Du er som en rose" };
-		int loveFlowerNumber = rand.nextInt(loveFlowerMessages.length);
 		for (ItemStack item : player.getInventory().getContents()) {
 			if (item != null && item.getItemMeta().getDisplayName().contains("Flower of love")) {
+				int loveFlowerNumber = rand.nextInt(loveFlowerMessages.length);
 				player.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[FLOWER OF LOVE] "
 						+ ChatColor.LIGHT_PURPLE + loveFlowerMessages[loveFlowerNumber]);
 				player.getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 5, 3);

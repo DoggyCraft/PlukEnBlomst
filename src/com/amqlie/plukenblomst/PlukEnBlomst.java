@@ -49,7 +49,7 @@ public class PlukEnBlomst extends JavaPlugin{
     {
     	this.specialFlowers = new SpecialFlowers();
     	getServer().getPluginManager().registerEvents(new BlockListener(this), this);
-    	saveDefaultConfig();
+    	saveConfig();
         Level.setup();
         Level.save();
         
@@ -122,7 +122,7 @@ public class PlukEnBlomst extends JavaPlugin{
 						player.sendMessage(ChatColor.AQUA + "Du har passeret eller er i level " + ChatColor.GOLD + "20");
 						player.sendMessage(ChatColor.AQUA + "Så du har " + ChatColor.GOLD + "5%" + ChatColor.AQUA + " chance for en fortryllet blomst!");
 					}
-				}
+				return true;}
 				
 				if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
 						player.sendMessage(ChatColor.RED + "Du skal skrive " + ChatColor.GOLD + "/blomst" + ChatColor.RED + " eller " + ChatColor.GOLD + "/blomst info (spiller)");
